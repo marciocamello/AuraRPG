@@ -17,10 +17,12 @@ class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
 
 public:
 	AAuraEnemy();
-	 
+
+	/** Enemy interface */
 	virtual void HighLightActor() override;
 	virtual void UnHighLightActor() override;
-
-	UPROPERTY(BlueprintReadOnly)
-	bool bHighlighted = false;
+	/** End Enemy interface */
+	
+protected:
+	virtual void BeginPlay() override;
 };
