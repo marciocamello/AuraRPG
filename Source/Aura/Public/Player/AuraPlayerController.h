@@ -41,6 +41,6 @@ private:
 	void Look(const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
-	IEnemyInterface* LastActor;
-	IEnemyInterface* ThisActor;
+	TObjectPtr<IEnemyInterface> LastActor;
+	TObjectPtr<IEnemyInterface> ThisActor;
 };
