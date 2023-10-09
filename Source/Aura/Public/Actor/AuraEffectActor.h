@@ -35,13 +35,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable, Category = "Applied Effects")
-	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
+	void ApplyEffectToTarget(AActor* TargetActor, const TSubclassOf<UGameplayEffect> GameplayEffectClass) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Applied Effects")
-	void OnOverlap(AActor* TargetActor);
+	void OnOverlap(AActor* TargetActor) const;
 
 	UFUNCTION(BlueprintCallable, Category = "Applied Effects")
-	void OnEndOverlap(AActor* TargetActor);
+	void OnEndOverlap(AActor* TargetActor) const;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	bool bDestroyOnEffectRemoval = false;
