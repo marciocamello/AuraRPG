@@ -8,7 +8,7 @@
 
 class UAttributeInfo;
 struct FAuraAttributeInfo;
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSginature, const FAuraAttributeInfo&, AttributeInfo);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSginature, const FAuraAttributeInfo&, Info);
 
 /**
  * 
