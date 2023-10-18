@@ -3,9 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AttributeSet.h"
 #include "GameplayTagContainer.h"
 #include "Engine/DataAsset.h"
 #include "AttributeInfo.generated.h"
+
+struct FGameplayAttribute;
 
 USTRUCT(BlueprintType)
 struct FAuraAttributeInfo
@@ -23,6 +26,9 @@ struct FAuraAttributeInfo
 	
 	UPROPERTY(BlueprintReadOnly)
 	float AttributeValue = 0.0f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayAttribute AttributeGetter;
 };
 
 /**
