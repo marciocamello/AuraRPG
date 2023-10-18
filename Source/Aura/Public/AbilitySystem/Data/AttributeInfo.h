@@ -34,12 +34,13 @@ struct FAuraAttributeInfo
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class AURA_API UAttributeInfo : public UDataAsset
 {
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION(BlueprintCallable)
 	FAuraAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
