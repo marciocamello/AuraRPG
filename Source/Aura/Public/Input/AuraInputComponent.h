@@ -22,7 +22,7 @@ template <class UserClass, typename PressedFuncType, typename ReleasedFuncType, 
 void UAuraInputComponent::BindAbilityActions(const UAuraInputConfig* InputConfig, UserClass* Object,
 	PressedFuncType PressedFunc, ReleasedFuncType ReleasedFunc, HeldFuncType HeldFunc)
 {
-	check(InputConfig);
+	if(InputConfig == nullptr) return;
 
 	for(const FAuraInputAction& Action : InputConfig->AbilityInputActions)
 	{
