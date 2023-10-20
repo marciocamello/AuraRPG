@@ -31,6 +31,8 @@ protected:
 
 private:
 
+	UPROPERTY(EditDefaultsOnly)
+	float LifeSpan = 15.f;
 	bool bHit = false;
 	
 	UPROPERTY(VisibleAnywhere)
@@ -43,7 +45,7 @@ private:
 	TObjectPtr<USoundBase> ImpactSound;
 
 	UPROPERTY(EditAnywhere)
-	TObjectPtr<USoundBase> LoopSound;
+	TObjectPtr<USoundBase> LoopingSound;
 
 	UPROPERTY()
 	TObjectPtr<UAudioComponent> LoopingSoundComponent;
