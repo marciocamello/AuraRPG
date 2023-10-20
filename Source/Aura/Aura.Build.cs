@@ -22,7 +22,7 @@ public class Aura : ModuleRules
 		{
 			"GameplayTags",
 			"GameplayTasks",
-			"NavigationSystem"
+			"NavigationSystem",
 		});
 
 		// Uncomment if you are using Slate UI
