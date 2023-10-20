@@ -42,6 +42,13 @@ private:
 	UPROPERTY(EditAnywhere, Category="Input")
 	TObjectPtr<UInputAction> LookAction;
 
+	UPROPERTY(EditAnywhere, Category="Input")
+	TObjectPtr<UInputAction> ShiftAction;
+
+	void ShiftPressed() { bShiftKeyDown = true;};
+	void ShiftReleased() { bShiftKeyDown = false;};
+	bool bShiftKeyDown = false;
+
 	void Look(const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
