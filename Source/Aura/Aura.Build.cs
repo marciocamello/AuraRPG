@@ -15,7 +15,7 @@ public class Aura : ModuleRules
 			"Engine", 
 			"InputCore",
 			"EnhancedInput",
-			"GameplayAbilities"
+			"GameplayAbilities",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]
@@ -23,6 +23,7 @@ public class Aura : ModuleRules
 			"GameplayTags",
 			"GameplayTasks",
 			"NavigationSystem",
+			"Niagara",
 		});
 
 		// Uncomment if you are using Slate UI
