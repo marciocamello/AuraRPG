@@ -101,7 +101,7 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 	bOutSuccess = true;
 	return true;*/
 
-	bool bBaseSuccess = Super::NetSerialize(Ar, Map, bOutSuccess);
+	const bool bBaseSuccess = Super::NetSerialize(Ar, Map, bOutSuccess);
 
 	if (Ar.IsSaving())
 	{
@@ -127,5 +127,5 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		}
 	}
 
-	return bBaseSuccess && true;
+	return bBaseSuccess;
 }
