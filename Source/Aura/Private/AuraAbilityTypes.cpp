@@ -101,6 +101,16 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 	bOutSuccess = true;
 	return true;*/
 
+	// Brian K. T. tests
+	/*bOutSuccess = Super::NetSerialize(Ar, Map, bOutSuccess);
+	Ar << bIsBlockedHit;
+	Ar << bICriticalHit;
+	if (Ar.IsLoading())
+	{
+		AddInstigator(Instigator.Get(), EffectCauser.Get()); // Just to initialize InstigatorAbilitySystemComponent
+	}    
+	return true;*/
+
 	const bool bBaseSuccess = Super::NetSerialize(Ar, Map, bOutSuccess);
 
 	if (Ar.IsSaving())
