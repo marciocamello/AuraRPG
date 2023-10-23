@@ -101,26 +101,27 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 	bOutSuccess = true;
 	return true;*/
 
-	const bool bBaseSuccess = Super::NetSerialize(Ar, Map, bOutSuccess);
+	bool bBaseSuccess = Super::NetSerialize(Ar, Map, bOutSuccess);
 
 	if (Ar.IsSaving())
 	{
 		if (bIsBlockedHit)
 		{
-			RepBits |= 1 << 7;
+			RepBits |= 1 << 0;
 		}
 		if (bICriticalHit)
 		{
-			RepBits |= 1 << 8;
+			RepBits |= 1 << 1;
 		}
 	}
-	else if (Ar.IsLoading())
+	
+	if (Ar.IsLoading())
 	{
-		if (RepBits & (1 << 7))
+		if (RepBits & (1 << 0))
 		{
 			Ar << bIsBlockedHit;
 		}
-		if (RepBits & (1 << 8))
+		if (RepBits & (1 << 1))
 		{
 			Ar << bICriticalHit;
 		}
