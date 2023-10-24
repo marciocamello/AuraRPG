@@ -42,11 +42,14 @@ void AAuraProjectile::BeginPlay()
 
 void AAuraProjectile::ApplyImpactEffects()
 {
-	UGameplayStatics::PlaySoundAtLocation(this,ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
-	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation(), FRotator::ZeroRotator);
-	if(LoopingSoundComponent != nullptr)
+	if(!bHit)
 	{
-		LoopingSoundComponent->Stop();
+		UGameplayStatics::PlaySoundAtLocation(this,ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactEffect, GetActorLocation(), FRotator::ZeroRotator);
+		if(LoopingSoundComponent != nullptr)
+		{
+			LoopingSoundComponent->Stop();
+		}
 	}
 }
 
@@ -62,6 +65,8 @@ void AAuraProjectile::Destroyed()
 void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
                                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if(DamageEffectSpecHandle.IsValid() && DamageEffectSpecHandle.Data.Get()->GetContext().GetEffectCauser() == OtherActor) return;
+	
 	ApplyImpactEffects();
 	
 	if(HasAuthority())
