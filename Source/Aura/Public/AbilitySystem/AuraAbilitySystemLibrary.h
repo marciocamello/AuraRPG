@@ -12,7 +12,6 @@ class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
 class UOverlayWidgetController;
 
-
 /**
  * 
  */
@@ -49,4 +48,7 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category= "Aura Ability System Library|Gameplay Effects")
 	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bIsCriticalHit);
+	
+	UFUNCTION(BlueprintCallable, Category= "Aura Ability System Library|Gameplay Mechanics")
+	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin);
 };
