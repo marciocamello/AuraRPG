@@ -14,17 +14,26 @@ public class Aura : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore",
+			"ModularGameplay",
+			"ModularGameplayActors",
 			"EnhancedInput",
+			"GameplayTags",
+			"GameplayTasks",
 			"GameplayAbilities",
+			"AIModule",
+			"GameFeatures",
+			"Niagara",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
-			"GameplayTags",
-			"GameplayTasks",
 			"NavigationSystem",
-			"Niagara",
-			"AIModule"
+			"UMG",
+			"CommonUI",
+			"CommonInput",
+			"CommonGame",
+			"CommonUser",
+			"GameplayMessageRuntime",
 		});
 
 		// Uncomment if you are using Slate UI
