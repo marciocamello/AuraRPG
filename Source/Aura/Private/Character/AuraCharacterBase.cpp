@@ -60,11 +60,6 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 void AAuraCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
-
-	if(UAnimInstance* AnimInstance = Weapon->GetAnimInstance())
-	{
-		WeaponAnimationInstance = AnimInstance;
-	}
 }
 
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag)
@@ -98,6 +93,11 @@ AActor* AAuraCharacterBase::GetAvatar_Implementation()
 TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation()
 {
 	return AttackMontages;
+}
+
+UNiagaraSystem* AAuraCharacterBase::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
 }
 
 void AAuraCharacterBase::InitAbilityActorInfo()
