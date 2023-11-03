@@ -50,6 +50,7 @@ void AAuraProjectile::ApplyImpactEffects()
 		if(LoopingSoundComponent != nullptr)
 		{
 			LoopingSoundComponent->Stop();
+			bHit = true;
 		}
 	}
 }
