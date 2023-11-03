@@ -31,16 +31,16 @@ struct FGameplayEffectProtocol
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (InlineEditConditionToggle))
-	bool bHasEffectApplicationPolicy;
+	bool bHasEffectApplicationPolicy = false;
     
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "bHasEffectApplicationPolicy"))
-	EEffectApplicationPolicy GameplayEffectApplicationPolicy;
+	EEffectApplicationPolicy GameplayEffectApplicationPolicy = EEffectApplicationPolicy::ApplyOnOverlap;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (InlineEditConditionToggle))
-	bool bHasEffectRemovalPolicy;
+	bool bHasEffectRemovalPolicy = false;
     
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "bHasEffectRemovalPolicy"))
-	EEffectRemovalPolicy GameplayEffectRemovalPolicy;
+	EEffectRemovalPolicy GameplayEffectRemovalPolicy = EEffectRemovalPolicy::RemoveEndOverlap;
 };
 
 UCLASS()
