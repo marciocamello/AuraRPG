@@ -71,17 +71,17 @@ void AAuraCharacterBase::BeginPlay()
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& SocketTag)
 {
 	const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
+	for(FCombatSockets CombatSocket : CombatSockets)
+	{
+		if(CombatSocket.AttackTipSocketTag.MatchesTagExact(SocketTag))
+		{
+			return GetMesh()->GetSocketLocation(CombatSocket.AttackTipSocketName);
+		}
+	}	
+	
 	if(SocketTag.MatchesTagExact(GameplayTags.CombatSocket_Weapon) && IsValid(Weapon))
 	{
 		return Weapon->GetSocketLocation(WeaponTipSocketName);
-	}
-	if(SocketTag.MatchesTagExact(GameplayTags.CombatSocket_LeftHand))
-	{
-		return GetMesh()->GetSocketLocation(LeftHandSocketName);
-	}
-	if(SocketTag.MatchesTagExact(GameplayTags.CombatSocket_RightHand))
-	{
-		return GetMesh()->GetSocketLocation(RightHandSocketName);
 	}
 	return FVector();
 }

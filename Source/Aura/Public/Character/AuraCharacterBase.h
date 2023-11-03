@@ -16,6 +16,18 @@ class UGameplayAbility;
 class UAnimMontage;
 class UAnimInstance;
 
+USTRUCT(BlueprintType)
+struct FCombatSockets
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName AttackTipSocketName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FGameplayTag AttackTipSocketTag;
+};
+
 UCLASS(Abstract)
 class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
 {
@@ -53,10 +65,7 @@ protected:
 	FName WeaponTipSocketName;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	FName LeftHandSocketName;
-
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	FName RightHandSocketName;
+	TArray<FCombatSockets> CombatSockets;
 
 	bool bDead = false;
 
