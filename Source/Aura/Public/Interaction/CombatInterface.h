@@ -26,6 +26,9 @@ struct FTaggedMontage
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USoundBase* ImpactSound = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	bool bUseWeaponMesh = false;
 };
 
 // This class does not need to be modified.
@@ -48,6 +51,9 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FVector GetCombatSocketLocation(const FGameplayTag& SocketTag);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FVector GetCombatSocketLocationFromAttackMontage(const FTaggedMontage& AttackMontage);
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdateFacingTarget(const FVector& TargetLocation);

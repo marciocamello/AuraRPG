@@ -90,6 +90,20 @@ FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGamepl
 	return FVector();
 }
 
+FVector AAuraCharacterBase::GetCombatSocketLocationFromAttackMontage_Implementation(const FTaggedMontage& AttackMontage)
+{
+	const FName SocketName = AttackMontage.SocketTag.GetTagName();
+	if (AttackMontage.bUseWeaponMesh)
+	{
+		return Weapon->GetSocketLocation(SocketName);
+	}
+	if (!AttackMontage.bUseWeaponMesh)
+	{
+		return GetMesh()->GetSocketLocation(SocketName);
+	}
+	return FVector();
+}
+
 bool AAuraCharacterBase::IsDead_Implementation() const
 {
 	return bDead;
