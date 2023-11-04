@@ -22,7 +22,7 @@ AAuraCharacterBase::AAuraCharacterBase()
 	GetMesh()->SetGenerateOverlapEvents(true);
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Weapon"));
-	Weapon->SetupAttachment(GetMesh(), TEXT("WeaponHandSocket"));
+	Weapon->SetupAttachment(GetMesh(), TEXT("CombatSocket.Weapon"));
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
@@ -71,18 +71,6 @@ void AAuraCharacterBase::BeginPlay()
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& SocketTag)
 {
 	const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
-
-	if(CombatSockets.Num() > 0)
-	{
-		for(FCombatSockets CombatSocket : CombatSockets)
-		{
-			if(CombatSocket.AttackTipSocketTag.MatchesTagExact(SocketTag))
-			{
-				return GetMesh()->GetSocketLocation(CombatSocket.AttackTipSocketName);
-			}
-		}
-	}
-	
 	if(SocketTag.MatchesTagExact(GameplayTags.CombatSocket_Weapon) && IsValid(Weapon))
 	{
 		return Weapon->GetSocketLocation(WeaponTipSocketName);
