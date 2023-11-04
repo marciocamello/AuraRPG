@@ -18,7 +18,7 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	
 }
 
-void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FTaggedMontage& AttackMontage)
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FTaggedMontage& AttackMontage, bool bOverridePitch , float PitchOverride)
 {
 	if(ProjectileClass == nullptr) return;
 	
@@ -30,6 +30,10 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		AttackMontage
 	);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+	if(bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
 	
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SocketLocation);
