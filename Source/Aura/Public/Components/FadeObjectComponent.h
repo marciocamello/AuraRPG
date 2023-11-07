@@ -7,7 +7,10 @@
 #include "Interaction/FadeInterface.h"
 #include "FadeObjectComponent.generated.h"
 
-UCLASS(Blueprintable, BlueprintType)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSetFadeOut);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSetFadeIn);
+
+UCLASS(Blueprintable, BlueprintType, meta=(BlueprintSpawnableComponent))
 class AURA_API UFadeObjectComponent : public UActorComponent, public IFadeInterface
 {
 	GENERATED_BODY()
@@ -28,12 +31,12 @@ public:
 	void SetupMaterials();
 
 	/*UFadeInterface*/
-	void FadeOut_Implementation() override;
-	void FadeIn_Implementation() override;
+	virtual void FadeOut_Implementation() override;
+	virtual void FadeIn_Implementation() override;
 	/*end UFadeInterface*/
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category="Default")
-	double AnimationProgress ;
+	float AnimationProgress = 1.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category="Default")
 	TArray<UMaterialInterface*> OriginalMaterials;
@@ -45,7 +48,7 @@ public:
 	TArray<UMaterialInstance*> FadeMaterialInstances;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Fade Properties")
-	bool BlockVisibility;
+	bool bBlockVisibility;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category="Default")
 	FTimerHandle FadeOutTimer;
@@ -55,6 +58,15 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category="Default")
 	FTimerHandle FadeInTimer;
+
+	UFUNCTION(BlueprintCallable)
+	void SetFadeOut();
+
+	UFUNCTION(BlueprintCallable)
+	void SetFadeIn();
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Fade Properties")
+	float FadeTime = 0.004f;
 
 protected:
 	virtual void BeginPlay() override;
