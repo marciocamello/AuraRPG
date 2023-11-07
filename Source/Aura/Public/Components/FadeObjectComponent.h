@@ -48,7 +48,7 @@ public:
 	TArray<UMaterialInstance*> FadeMaterialInstances;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Fade Properties")
-	bool bBlockVisibility;
+	bool bBlockVisibility = false;
 
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category="Default")
 	FTimerHandle FadeOutTimer;
