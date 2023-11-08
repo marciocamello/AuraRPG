@@ -43,6 +43,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FAuraAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false) const;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attribute Information")
 	TArray<FAuraAttributeInfo> AttributeInformation;
 };
