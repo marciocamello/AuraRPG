@@ -64,6 +64,9 @@ public:
 	// fire abilities
 	FGameplayTag Abilities_Fire_FireBolt;
 
+	// cooldowns
+	FGameplayTag Cooldown_Fire_FireBolt;
+
 	// combat sockets
 	FGameplayTag CombatSocket_Weapon;
 	FGameplayTag CombatSocket_RightHand;
