@@ -98,6 +98,7 @@ void UFadeObjectComponent::SetFadeIn()
 	if(AnimationProgress >= 1.0f)
 	{
 		GetWorld()->GetTimerManager().ClearTimer(FadeOutTimer);
+		FadeFinish(AnimationProgress);
 	}
 	else
 	{
@@ -106,7 +107,6 @@ void UFadeObjectComponent::SetFadeIn()
 			UMaterialInstanceDynamic* DynamicMaterialInstance = DynamicMaterialInstances[Index];
 			DynamicMaterialInstance->SetScalarParameterValue(FName("Fade"), AnimationProgress);
 		}
-		FadeFinish(AnimationProgress);
 	}
 }
 
