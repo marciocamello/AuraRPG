@@ -11,7 +11,7 @@ class UAbilitySystemComponent;
 class UAttributeSet;
 class ULevelUpInfo;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChanged, int32, /*StatValue*/)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnPlayerStatChanged, int32 /*StatValue*/)
 
 /**
  * 
