@@ -8,7 +8,7 @@
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
-#include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "Game/Data/CharacterClassInfo.h"
 #include "Interaction/CombatInterface.h"
 
 struct AuraDamageStatics

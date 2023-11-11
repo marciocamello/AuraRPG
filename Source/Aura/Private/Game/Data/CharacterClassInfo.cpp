@@ -1,7 +1,7 @@
 ﻿// Copyright Axchemy Games
 
 
-#include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "Game/Data/CharacterClassInfo.h"
 
 FCharacterClassDefaultInfo UCharacterClassInfo::GetClassDefaultInfo(ECharacterClass CharacterClass)
 {
