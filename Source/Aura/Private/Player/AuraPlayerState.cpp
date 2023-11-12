@@ -31,25 +31,25 @@ UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
-void AAuraPlayerState::AddPlayerXP(int32 XPToAdd)
+void AAuraPlayerState::AddToXP(int32 XPToAdd)
 {
 	XP += XPToAdd;
 	OnXPChangedDelegate.Broadcast(XP);
 }
 
-void AAuraPlayerState::AddPlayerLevel(int32 LevelToAdd)
+void AAuraPlayerState::AddToLevel(int32 LevelToAdd)
 {
 	Level += LevelToAdd;
 	OnLevelChangedDelegate.Broadcast(Level);
 }
 
-void AAuraPlayerState::SetPlayerXP(int32 NewXP)
+void AAuraPlayerState::SetXP(int32 NewXP)
 {
 	XP = NewXP;
 	OnXPChangedDelegate.Broadcast(XP);
 }
 
-void AAuraPlayerState::SetPlayerLevel(int32 NewLevel)
+void AAuraPlayerState::SetLevel(int32 NewLevel)
 {
 	Level = NewLevel;
 	OnLevelChangedDelegate.Broadcast(Level);

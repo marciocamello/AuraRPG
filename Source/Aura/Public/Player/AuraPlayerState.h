@@ -36,11 +36,11 @@ public:
 	FORCEINLINE int32 GetPlayerLevel() const { return Level; }
 	FORCEINLINE int32 GetPlayerXP() const { return XP; }
 
-	void AddPlayerXP(int32 XPToAdd);
-	void AddPlayerLevel(int32 LevelToAdd);
+	void AddToXP(int32 XPToAdd);
+	void AddToLevel(int32 LevelToAdd);
 	
-	void SetPlayerXP(int32 NewXP);
-	void SetPlayerLevel(int32 NewLevel);
+	void SetXP(int32 NewXP);
+	void SetLevel(int32 NewLevel);
 protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
