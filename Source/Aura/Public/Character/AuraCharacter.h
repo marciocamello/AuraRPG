@@ -21,8 +21,10 @@ public:
 	virtual void OnRep_PlayerState() override;
 
 	/** UPlayerInterface */
+	virtual int32 GetXP_Implementation() const override;
 	virtual void AddToXP_Implementation(int32 XPToAdd) override;
 	virtual void LevelUp_Implementation() override;
+	virtual int32 FindLevelForXP_Implementation(int32 InXP) const override;
 	/** End UPlayerInterface */
 
 	/* Combat Interface*/
