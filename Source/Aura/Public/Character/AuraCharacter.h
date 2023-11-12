@@ -22,10 +22,11 @@ public:
 
 	/** UPlayerInterface */
 	virtual void AddToXP_Implementation(int32 XPToAdd) override;
+	virtual void LevelUp_Implementation() override;
 	/** End UPlayerInterface */
 
 	/* Combat Interface*/
-	virtual int32 GetPlayerLevel() override;
+	virtual int32 GetPlayerLevel_Implementation() override;
 	/* End Combat Interface*/
 	
 private:
