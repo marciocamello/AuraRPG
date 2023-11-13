@@ -154,8 +154,6 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 	{
 		const float LocalIncomingXP = GetIncomingXP();
 		SetIncomingXP(0.f);
-
-		//TODO: see if we should level up
 		
 		// source character is the owner, since GA_ListenForEvents applies GE_EventBasedEffect, adding to IncomingXP
 		if(EffectProperties.SourceCharacter->Implements<UPlayerInterface>() && EffectProperties.SourceCharacter->Implements<UCombatInterface>())
@@ -167,12 +165,15 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectMo
 			const int32 NumberLevelUPs = NewLevel - CurrentLevel;
 			if(NumberLevelUPs > 0)
 			{
-				//TODO: Get attributes points reward, spell points reward
-				// GetAttributePointsReward()
-				// GetSpellPointsReward()
-				// AddToPlayerLevel()
-				// AddToAttributesPoints()
-				// AddToSpellPoints()
+				const int32 AttributePointsReward = IPlayerInterface::Execute_GetAttributePointsReward(EffectProperties.SourceCharacter, CurrentLevel);
+				const int32 SpellPointsReward = IPlayerInterface::Execute_GetSpellPointsReward(EffectProperties.SourceCharacter, CurrentLevel);
+
+				IPlayerInterface::Execute_AddToPlayerLevel(EffectProperties.SourceCharacter, NumberLevelUPs);
+				IPlayerInterface::Execute_AddToAttributePoints(EffectProperties.SourceCharacter, AttributePointsReward);
+				IPlayerInterface::Execute_AddToSpellPoints(EffectProperties.SourceCharacter, SpellPointsReward);
+
+				SetHealth(GetMaxHealth());
+				SetMana(GetMaxMana());
 				
 				IPlayerInterface::Execute_LevelUp(EffectProperties.SourceCharacter);
 			}
