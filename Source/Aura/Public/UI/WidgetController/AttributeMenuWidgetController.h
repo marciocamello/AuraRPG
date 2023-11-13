@@ -9,6 +9,7 @@
 struct FGameplayTag;
 class UAttributeInfo;
 struct FAuraAttributeInfo;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSginature, const FAuraAttributeInfo&, Info);
 
 /**
@@ -25,6 +26,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FAttributeInfoSginature AttributeInfoDelegate;
+
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FOnStatChangedSignature AttributePointsChangedDelegate;
+	
 
 private:
 	void BroadcastAttributeInfo(const FGameplayTag& Tag) const;
