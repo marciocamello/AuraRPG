@@ -24,6 +24,7 @@ void UAuraWidgetController::BroadcastInitialValues()
 
 void UAuraWidgetController::BindCallbackToDependencies()
 {
+	
 }
 
 void UAuraWidgetController::BroadcastAbilityInfo()
@@ -34,7 +35,8 @@ void UAuraWidgetController::BroadcastAbilityInfo()
 	BroadcastDelegate.BindLambda([this](const FGameplayAbilitySpec& AbilitySpec)
 	{
 		FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(GetAuraAbilitySystemComponent()->GetAbilityTagFromSpec(AbilitySpec));
-		Info.InputTag = GetAuraAbilitySystemComponent()->GetInputTagFromSpec(AbilitySpec);
+		Info.InputTag = AuraAbilitySystemComponent->GetInputTagFromSpec(AbilitySpec);
+		Info.StatusTag = AuraAbilitySystemComponent->GetStatusFromSpec(AbilitySpec);
 		AbilityInfoDelegate.Broadcast(Info);
 	});
 	GetAuraAbilitySystemComponent()->ForEachAbility(BroadcastDelegate);
