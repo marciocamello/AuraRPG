@@ -63,6 +63,7 @@ public:
 	FGameplayTag Damage_Physical;
 
 	// abilities 
+	FGameplayTag Abilities_None;
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
 	
