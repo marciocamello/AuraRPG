@@ -37,6 +37,15 @@ struct FAuraAbilityInfo
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayAbility> Ability;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
+	FText Description = FText();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
+	FText NextLevelDescription = FText();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
+	FText LockedDescription = FText();
 	
 };
 
