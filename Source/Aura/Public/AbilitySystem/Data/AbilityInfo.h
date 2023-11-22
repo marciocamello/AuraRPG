@@ -9,6 +9,29 @@
 
 class UGameplayAbility;
 
+UENUM(BlueprintType)
+enum EAuraAbilityInfoDescriptionType
+{
+	NormalInfo     UMETA(DisplayName = "Normal Info"),
+	NextLevelInfo     UMETA(DisplayName = "Next Level Info"),
+	LockedInfo    UMETA(DisplayName = "Locked Info"),
+};
+
+USTRUCT(BlueprintType)
+struct FAuraAbilityInfoDescription
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TEnumAsByte<EAuraAbilityInfoDescriptionType> DescriptionType = EAuraAbilityInfoDescriptionType::NormalInfo;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FText Title = FText();
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
+	FText Description = FText();
+};
+
 USTRUCT(BlueprintType)
 struct FAuraAbilityInfo
 {
@@ -38,15 +61,8 @@ struct FAuraAbilityInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayAbility> Ability;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
-	FText Description = FText();
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
-	FText NextLevelDescription = FText();
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
-	FText LockedDescription = FText();
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TArray<FAuraAbilityInfoDescription> Descriptions;
 };
 
 /**
@@ -59,6 +75,9 @@ class AURA_API UAbilityInfo : public UDataAsset
 public:
 	UFUNCTION(BlueprintCallable)
 	FAuraAbilityInfo FindAbilityInfoForTag(const FGameplayTag& AbilityTag, bool bLogNotFound = false) const;
+	
+	UFUNCTION(BlueprintCallable)
+	FAuraAbilityInfoDescription FindAbilityInfoDescriptionForType(const FGameplayTag& AbilityTag, const EAuraAbilityInfoDescriptionType& DescriptionType, bool bLogNotFound = false) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability Information")
 	TArray<FAuraAbilityInfo> AbilityInformation;
