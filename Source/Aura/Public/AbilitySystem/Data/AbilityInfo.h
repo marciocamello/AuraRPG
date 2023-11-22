@@ -23,7 +23,7 @@ struct FAuraAbilityInfoDescription
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TEnumAsByte<EAuraAbilityInfoDescriptionType> DescriptionType = EAuraAbilityInfoDescriptionType::NormalInfo;
+	TEnumAsByte<EAuraAbilityInfoDescriptionType> DescriptionType = NormalInfo;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FText Title = FText();
