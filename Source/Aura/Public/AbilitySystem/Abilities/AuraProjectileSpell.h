@@ -17,6 +17,10 @@ UCLASS()
 class AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 {
 	GENERATED_BODY()
+
+public:
+	virtual FString GetDescription(int32 Level) override;
+	virtual FString GetNextLevelDescription(int32 Level) override;
 	
 protected:
 
@@ -27,5 +31,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TSubclassOf<AAuraProjectile> ProjectileClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 NumProjectiles = 5;
 
 }; 

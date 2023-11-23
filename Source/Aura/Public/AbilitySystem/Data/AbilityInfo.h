@@ -10,11 +10,37 @@
 class UGameplayAbility;
 
 UENUM(BlueprintType)
-enum EAuraAbilityInfoDescriptionType
+enum EAuraAbilityInfoDescriptionType : uint8
 {
 	NormalInfo     UMETA(DisplayName = "Normal Info"),
 	NextLevelInfo     UMETA(DisplayName = "Next Level Info"),
 	LockedInfo    UMETA(DisplayName = "Locked Info"),
+};
+
+UENUM(BlueprintType)
+enum EAuraAbilityInfoStylesType : uint8
+{
+	Default     UMETA(DisplayName = "Default"),
+	Title	 UMETA(DisplayName = "Title"),
+	Level     UMETA(DisplayName = "Level"),
+	Damage     UMETA(DisplayName = "Damage"),
+	Cooldown     UMETA(DisplayName = "Cooldown"),
+	Percent	 UMETA(DisplayName = "Percent"),
+	Name	 UMETA(DisplayName = "Name"),
+	ManaCost    UMETA(DisplayName = "Mana Cost"),
+	Small    UMETA(DisplayName = "Small"),
+};
+
+USTRUCT(BlueprintType)
+struct FAuraAbilityInfoAbilityDetails
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TEnumAsByte<EAuraAbilityInfoStylesType> StyleType = EAuraAbilityInfoStylesType::Default;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(MultiLine=true))
+	FText Text;
 };
 
 USTRUCT(BlueprintType)
@@ -23,13 +49,10 @@ struct FAuraAbilityInfoDescription
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TEnumAsByte<EAuraAbilityInfoDescriptionType> DescriptionType = NormalInfo;
+	TEnumAsByte<EAuraAbilityInfoDescriptionType> DescriptionType = EAuraAbilityInfoDescriptionType::NormalInfo;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FText Title = FText();
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (MultiLine = "true"))
-	FText Description = FText();
+	FAuraAbilityInfoAbilityDetails AbilityDetails;
 };
 
 USTRUCT(BlueprintType)
@@ -61,7 +84,7 @@ struct FAuraAbilityInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayAbility> Ability;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Ability Description")
 	TArray<FAuraAbilityInfoDescription> Descriptions;
 };
 
