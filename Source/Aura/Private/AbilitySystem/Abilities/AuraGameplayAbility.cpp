@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 
+#include "AbilitySystem/AuraAttributeSet.h"
+
 /*
  * Usage:
  * TArray<FText> TextValues;
@@ -39,4 +41,31 @@ FString UAuraGameplayAbility::GetNextLevelDescription(int32 Level)
 FString UAuraGameplayAbility::GetLockedDescription(int32 Level)
 {
 	return FString::Printf(TEXT("<Default>Spell Locked Until Level: %d</>"), Level);
+}
+
+float UAuraGameplayAbility::GetManaCost(float InLevel) const
+{
+	float ManaCost = 0.f;
+	if(const UGameplayEffect* CostEffect = GetCostGameplayEffect())
+	{
+		for(const FGameplayModifierInfo& Modifier : CostEffect->Modifiers)
+		{
+			if(Modifier.Attribute == UAuraAttributeSet::GetManaAttribute())
+			{
+				Modifier.ModifierMagnitude.GetStaticMagnitudeIfPossible(InLevel, ManaCost);
+				break;
+			}
+		}
+	}
+	return ManaCost;
+}
+
+float UAuraGameplayAbility::GetCooldownCost(float InLevel) const
+{
+	float CoolDownCost = 0.f;
+	if(const UGameplayEffect* CooldownEffect = GetCostGameplayEffect())
+	{
+		CooldownEffect->DurationMagnitude.GetStaticMagnitudeIfPossible(InLevel, CoolDownCost);
+	}
+	return CoolDownCost;
 }
