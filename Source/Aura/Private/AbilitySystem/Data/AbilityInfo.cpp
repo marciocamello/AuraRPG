@@ -22,23 +22,3 @@ FAuraAbilityInfo UAbilityInfo::FindAbilityInfoForTag(const FGameplayTag& Ability
 
 	return FAuraAbilityInfo();
 }
-
-FAuraAbilityInfoDescription UAbilityInfo::FindAbilityInfoDescriptionForType(const FGameplayTag& AbilityTag, const EAuraAbilityInfoDescriptionType& DescriptionType,
-	bool bLogNotFound) const
-{
-	const FAuraAbilityInfo AbilityInfo = FindAbilityInfoForTag(AbilityTag, bLogNotFound);
-	for (const FAuraAbilityInfoDescription& Description : AbilityInfo.Descriptions)
-	{
-		if (Description.DescriptionType == DescriptionType)
-		{
-			return Description;
-		}
-	}
-
-	if(bLogNotFound)
-	{
-		UE_LOG(LogAura, Error, TEXT("Can't find info for DescriptionType [%s] on AbilityInfo [%s]"), *UEnum::GetValueAsString(DescriptionType), *GetNameSafe(this));
-	}
-
-	return FAuraAbilityInfoDescription();
-}

@@ -19,10 +19,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	FGameplayTag StartupInputTag;
 
-	virtual FString GetFormattedDescription(const FString Template, TArray<FText> TextValues);
-	virtual FString GetDescription(int32 Level);
-	virtual FString GetNextLevelDescription(int32 Level);
-	static FString GetLockedDescription(int32 Level);
+	virtual FString GetDescription(int32 Level, FText Title = FText(),FText Description = FText());
+	virtual FString GetNextLevelDescription(int32 Level, FText Title = FText(),  FText Description = FText());
+	static FString GetLockedDescription(int32 Level, FText Title = FText(), FText Description = FText());
 
 protected:
 

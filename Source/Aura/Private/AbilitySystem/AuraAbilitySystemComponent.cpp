@@ -222,13 +222,20 @@ bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag(const FGameplayTag
 	{
 		if(UAuraGameplayAbility* AuraAbility = Cast<UAuraGameplayAbility>(AbilitySpec->Ability))
 		{
-			OutDescription = AuraAbility->GetDescription(AbilitySpec->Level);
-			OutNextLevelDescription = AuraAbility->GetNextLevelDescription(AbilitySpec->Level + 1);
+			OutDescription = AuraAbility->GetDescription(AbilitySpec->Level, AuraAbilityInfo.Title, AuraAbilityInfo.Description);
+			OutNextLevelDescription = AuraAbility->GetNextLevelDescription(AbilitySpec->Level + 1, AuraAbilityInfo.Title, AuraAbilityInfo.NextLevelDescription);
 			return true;
 		}
 	}
 	
-	OutDescription = UAuraGameplayAbility::GetLockedDescription(AuraAbilityInfo.LevelRequirement);
+	if(!AbilityTag.IsValid() || AbilityTag.MatchesTagExact(FAuraGameplayTags::Get().Abilities_None))
+	{
+		OutDescription = FString();
+	}
+	else
+	{
+		OutDescription = UAuraGameplayAbility::GetLockedDescription(AuraAbilityInfo.LevelRequirement, AuraAbilityInfo.LockedDescription);
+	}
 	OutNextLevelDescription = FString();
 	return false;
 }

@@ -9,52 +9,6 @@
 
 class UGameplayAbility;
 
-UENUM(BlueprintType)
-enum EAuraAbilityInfoDescriptionType : uint8
-{
-	NormalInfo     UMETA(DisplayName = "Normal Info"),
-	NextLevelInfo     UMETA(DisplayName = "Next Level Info"),
-	LockedInfo    UMETA(DisplayName = "Locked Info"),
-};
-
-UENUM(BlueprintType)
-enum EAuraAbilityInfoStylesType : uint8
-{
-	Default     UMETA(DisplayName = "Default"),
-	Title	 UMETA(DisplayName = "Title"),
-	Level     UMETA(DisplayName = "Level"),
-	Damage     UMETA(DisplayName = "Damage"),
-	Cooldown     UMETA(DisplayName = "Cooldown"),
-	Percent	 UMETA(DisplayName = "Percent"),
-	Name	 UMETA(DisplayName = "Name"),
-	ManaCost    UMETA(DisplayName = "Mana Cost"),
-	Small    UMETA(DisplayName = "Small"),
-};
-
-USTRUCT(BlueprintType)
-struct FAuraAbilityInfoAbilityDetails
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TEnumAsByte<EAuraAbilityInfoStylesType> StyleType = EAuraAbilityInfoStylesType::Default;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta=(MultiLine=true))
-	FText Text;
-};
-
-USTRUCT(BlueprintType)
-struct FAuraAbilityInfoDescription
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TEnumAsByte<EAuraAbilityInfoDescriptionType> DescriptionType = EAuraAbilityInfoDescriptionType::NormalInfo;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FAuraAbilityInfoAbilityDetails AbilityDetails;
-};
-
 USTRUCT(BlueprintType)
 struct FAuraAbilityInfo
 {
@@ -84,8 +38,17 @@ struct FAuraAbilityInfo
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSubclassOf<UGameplayAbility> Ability;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Ability Description")
-	TArray<FAuraAbilityInfoDescription> Descriptions;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Ability Details")
+	FText Title;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Ability Details", meta=(MultiLine=true))
+	FText Description;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Ability Details", meta=(MultiLine=true))
+	FText NextLevelDescription;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, category = "Ability Details", meta=(MultiLine=true))
+	FText LockedDescription;
 };
 
 /**
@@ -98,9 +61,6 @@ class AURA_API UAbilityInfo : public UDataAsset
 public:
 	UFUNCTION(BlueprintCallable)
 	FAuraAbilityInfo FindAbilityInfoForTag(const FGameplayTag& AbilityTag, bool bLogNotFound = false) const;
-	
-	UFUNCTION(BlueprintCallable)
-	FAuraAbilityInfoDescription FindAbilityInfoDescriptionForType(const FGameplayTag& AbilityTag, const EAuraAbilityInfoDescriptionType& DescriptionType, bool bLogNotFound = false) const;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability Information")
 	TArray<FAuraAbilityInfo> AbilityInformation;
