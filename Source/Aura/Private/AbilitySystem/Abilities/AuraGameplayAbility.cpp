@@ -7,13 +7,8 @@
 
 FString UAuraGameplayAbility::GetDescription(int32 Level, FText Title, FText Description)
 {
-	if(Description.IsEmpty() && Title.IsEmpty())
+	if(!Description.IsEmpty() && !Title.IsEmpty())
 	{
-		return FString::Printf(TEXT("<Default>%s, </><Level>%d</>"), L"Default Ability Name - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", Level);
-	}
-	else
-	{
-		
 		FString Template = "<Title>{Title}</>\n\n"
 						"<Default>{Description}</>\n\n"
 						"<Small>Level:</> <Level>{Level}</>";
@@ -22,14 +17,12 @@ FString UAuraGameplayAbility::GetDescription(int32 Level, FText Title, FText Des
 		Template = Template.Replace(TEXT("{Level}"), *FText::FromString(FString::FromInt(Level)).ToString());
 		return Template.Replace(TEXT("{Description}"), *Description.ToString());
 	}
+	return FString();
 }
 
 FString UAuraGameplayAbility::GetNextLevelDescription(int32 Level, FText Title, FText Description)
 {
-	if(Description.IsEmpty() && Title.IsEmpty())
-	{
-		return FString::Printf(TEXT("<Default>Next Level: </><Level>%d</>\n<Default>Causes much more damage.</>"), Level);	}
-	else
+	if(!Description.IsEmpty() && !Title.IsEmpty())
 	{
 		FString Template = "<Title>{Title}</>\n\n"
 						"<Default>{Description}</>\n\n"
@@ -39,6 +32,7 @@ FString UAuraGameplayAbility::GetNextLevelDescription(int32 Level, FText Title, 
 		Template = Template.Replace(TEXT("{Level}"), *FText::FromString(FString::FromInt(Level)).ToString());
 		return Template.Replace(TEXT("{Description}"), *Description.ToString());
 	}
+	return FString();
 }
 
 FString UAuraGameplayAbility::GetLockedDescription(int32 Level, FText Title, FText Description)
