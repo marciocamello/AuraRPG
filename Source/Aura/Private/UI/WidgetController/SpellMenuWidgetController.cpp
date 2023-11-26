@@ -41,6 +41,8 @@ void USpellMenuWidgetController::BindCallbackToDependencies()
 		}
 	);
 
+	GetAuraAbilitySystemComponent()->AbilityEquipped.AddUObject(this, &USpellMenuWidgetController::OnAbilityEquipped);
+
 	GetAuraPlayerState()->OnSpellPointsChangedDelegate.AddLambda(
 		[this](int32 SpellPoints)
 		{
@@ -132,7 +134,7 @@ void USpellMenuWidgetController::EquipButtonPressed()
 	}
 }
 
-void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& AbilityTag, const FGameplayTag& AbilityType)
+void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& SlotTag, const FGameplayTag& AbilityType)
 {
 	if(!bWaitingForEquipSelection) return;
 	// check selected ability against the slot's ability type.
@@ -140,7 +142,29 @@ void USpellMenuWidgetController::SpellRowGlobePressed(const FGameplayTag& Abilit
 	const FGameplayTag& SelectedAbilityType = AbilityInfo->FindAbilityInfoForTag(SelectedAbility.Ability).AbilityType;
 	if(!SelectedAbilityType.MatchesTagExact(AbilityType)) return;
 
+	GetAuraAbilitySystemComponent()->ServerEquipAbility(SelectedAbility.Ability, SlotTag); 
+}
+
+void USpellMenuWidgetController::OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& Status,
+	const FGameplayTag& Slot, FGameplayTag PreviousSlot)
+{
+	bWaitingForEquipSelection = false;
+
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
 	
+	FAuraAbilityInfo LastSlotInfo;
+	LastSlotInfo.StatusTag = GameplayTags.Abilities_Status_Unlocked;
+	LastSlotInfo.InputTag = PreviousSlot;
+	LastSlotInfo.AbilityTag = GameplayTags.Abilities_None;
+	// broadcast empty info if PreviousSlot is a valid. Only if equipping on already-equipped spell
+	AbilityInfoDelegate.Broadcast(LastSlotInfo);
+
+	FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(AbilityTag);
+	Info.StatusTag = Status;
+	Info.InputTag = Slot;
+	AbilityInfoDelegate.Broadcast(Info);
+
+	StopWaitingForEquipDelegate.Broadcast(AbilityInfo->FindAbilityInfoForTag(AbilityTag).AbilityType);
 }
 
 void USpellMenuWidgetController::ShouldEnableButtons(const FGameplayTag& AbilityStatus, int32 SpellPoints,

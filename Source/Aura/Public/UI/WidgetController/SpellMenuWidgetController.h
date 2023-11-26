@@ -53,7 +53,9 @@ public:
 	void EquipButtonPressed();
 
 	UFUNCTION(BlueprintCallable)
-	void SpellRowGlobePressed(const FGameplayTag& AbilityTag, const FGameplayTag& AbilityType);
+	void SpellRowGlobePressed(const FGameplayTag& SlotTag, const FGameplayTag& AbilityType);
+
+	void OnAbilityEquipped(const FGameplayTag& AbilityTag, const FGameplayTag& Status, const FGameplayTag& Slot, FGameplayTag PreviousSlot);
 
 private:
 	
