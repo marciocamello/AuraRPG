@@ -201,14 +201,14 @@ FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const 
 	FGameplayEffectContextHandle EffectContextHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeEffectContext();
 	EffectContextHandle.AddSourceObject(SourceAvatarActor);
 	
-	const FGameplayEffectSpecHandle SpecHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeOutgoingSpec(
-		DamageEffectParams.DamageGameplayEffectClass,
-		DamageEffectParams.AbilityLevel,
-		EffectContextHandle
-	);
-	
 	for(const TTuple<FGameplayTag, FAuraDamageGameplayEffect>& Pair : DamageEffectParams.DamageType)
 	{
+		const FGameplayEffectSpecHandle SpecHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeOutgoingSpec(
+			Pair.Value.DamageEffectClass,
+			DamageEffectParams.AbilityLevel,
+			EffectContextHandle
+		);
+		
 		const float ScaledDamage = Pair.Value.Damage.GetValueAtLevel(DamageEffectParams.AbilityLevel);
 		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);
 
@@ -235,9 +235,10 @@ FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const 
 			GameplayTags.Debuff_Duration,
 			Pair.Value.DebuffDuration.GetValueAtLevel(DamageEffectParams.AbilityLevel)
 		);
+		
+		DamageEffectParams.TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
 	
-	DamageEffectParams.TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	return EffectContextHandle;
 }
 

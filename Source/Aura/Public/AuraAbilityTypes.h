@@ -11,6 +11,9 @@ USTRUCT(BlueprintType)
 struct FAuraDamageGameplayEffect
 {
 	GENERATED_BODY()
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Damage")
 	FScalableFloat Damage;
@@ -37,9 +40,6 @@ struct FDamageEffectParams
 
 	UPROPERTY()
 	TObjectPtr<UObject> WorldContextObject = nullptr;
-
-	UPROPERTY()
-	TSubclassOf<UGameplayEffect> DamageGameplayEffectClass = nullptr;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> SourceAbilitySystemComponent = nullptr;
