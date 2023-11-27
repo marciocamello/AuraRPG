@@ -68,5 +68,8 @@ public:
 	UFUNCTION(BlueprintPure, Category= "Aura Ability System Library|Gameplay Mechanics")
 	static bool IsNotFriend(const AActor* FirstActor, const AActor* SecondActor);
 
+	UFUNCTION(BlueprintCallable, Category= "Aura Ability System Library|Damage Effect")
+	static FGameplayEffectContextHandle ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams);
+
 	static int32 GetXPRewardForClassAndLevel(const UObject* WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel);
 };

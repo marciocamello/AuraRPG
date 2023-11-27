@@ -3,8 +3,11 @@
 
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "AuraAbilityTypes.h"
+#include "AuraGameplayTags.h"
+#include "AbilitySystem/Abilities/AuraDamageGameplayAbility.h"
 #include "Game/AuraGameModeBase.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
@@ -190,8 +193,56 @@ bool UAuraAbilitySystemLibrary::IsNotFriend(const AActor* FirstActor, const AAct
 	return !bFriends;
 }
 
+FGameplayEffectContextHandle UAuraAbilitySystemLibrary::ApplyDamageEffect(const FDamageEffectParams& DamageEffectParams)
+{
+	const FAuraGameplayTags GameplayTags = FAuraGameplayTags::Get();
+	const AActor* SourceAvatarActor = DamageEffectParams.SourceAbilitySystemComponent->GetAvatarActor();
+	
+	FGameplayEffectContextHandle EffectContextHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(SourceAvatarActor);
+	
+	const FGameplayEffectSpecHandle SpecHandle = DamageEffectParams.SourceAbilitySystemComponent->MakeOutgoingSpec(
+		DamageEffectParams.DamageGameplayEffectClass,
+		DamageEffectParams.AbilityLevel,
+		EffectContextHandle
+	);
+	
+	for(const TTuple<FGameplayTag, FAuraDamageGameplayEffect>& Pair : DamageEffectParams.DamageType)
+	{
+		const float ScaledDamage = Pair.Value.Damage.GetValueAtLevel(DamageEffectParams.AbilityLevel);
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);
+
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(
+			SpecHandle,
+			GameplayTags.Debuff_Chance,
+			Pair.Value.DebuffChance.GetValueAtLevel(DamageEffectParams.AbilityLevel)
+		);
+
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(
+			SpecHandle,
+			GameplayTags.Debuff_Damage,
+			Pair.Value.DebuffDamage.GetValueAtLevel(DamageEffectParams.AbilityLevel)
+		);
+
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(
+			SpecHandle,
+			GameplayTags.Debuff_Frequency,
+			Pair.Value.DebuffFrequency.GetValueAtLevel(DamageEffectParams.AbilityLevel)
+		);
+
+		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(
+			SpecHandle,
+			GameplayTags.Debuff_Duration,
+			Pair.Value.DebuffDuration.GetValueAtLevel(DamageEffectParams.AbilityLevel)
+		);
+	}
+	
+	DamageEffectParams.TargetAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
+	return EffectContextHandle;
+}
+
 int32 UAuraAbilitySystemLibrary::GetXPRewardForClassAndLevel(const UObject* WorldContextObject,
-	ECharacterClass CharacterClass, int32 CharacterLevel)
+                                                             ECharacterClass CharacterClass, int32 CharacterLevel)
 {
 	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
 	if(CharacterClassInfo == nullptr) 0;

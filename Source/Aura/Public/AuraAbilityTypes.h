@@ -1,8 +1,74 @@
 ﻿#pragma once
 
 #include "GameplayEffectTypes.h"
+#include "ScalableFloat.h"
 
 #include "AuraAbilityTypes.generated.h"
+
+class UGameplayEffect;
+
+USTRUCT(BlueprintType)
+struct FAuraDamageGameplayEffect
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Damage")
+	FScalableFloat Damage;
+
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FScalableFloat DebuffChance = 20.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FScalableFloat DebuffDamage = 5.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FScalableFloat DebuffFrequency = 1.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FScalableFloat DebuffDuration = 5.f;
+};
+
+USTRUCT(BlueprintType)
+struct FDamageEffectParams
+{
+	GENERATED_BODY()
+
+	FDamageEffectParams(){}
+
+	UPROPERTY()
+	TObjectPtr<UObject> WorldContextObject = nullptr;
+
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> DamageGameplayEffectClass = nullptr;
+
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> SourceAbilitySystemComponent = nullptr;
+
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> TargetAbilitySystemComponent = nullptr;
+
+	UPROPERTY()
+	float BaseDamage = 0.f;
+
+	UPROPERTY()
+	float AbilityLevel = 1.f;
+	
+	UPROPERTY()
+	TMap<FGameplayTag, FAuraDamageGameplayEffect> DamageType;
+
+	UPROPERTY()
+	FScalableFloat DebuffChance = 20.f;
+
+	UPROPERTY()
+	FScalableFloat DebuffDamage = 5.f;
+
+	UPROPERTY()
+	FScalableFloat DebuffFrequency = 1.f;
+
+	UPROPERTY()
+	FScalableFloat DebuffDuration = 5.f; 
+	
+};
 
 USTRUCT(BlueprintType)
 struct FAuraGameplayEffectContext : public FGameplayEffectContext
