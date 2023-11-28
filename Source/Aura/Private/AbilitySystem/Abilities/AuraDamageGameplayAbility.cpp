@@ -44,6 +44,13 @@ FTaggedMontage UAuraDamageGameplayAbility::GetRandomTaggedMontageFromArray(const
 
 float UAuraDamageGameplayAbility::GetDamageByDamageType(float InLevel, const FGameplayTag& DamageTypeTag) const
 {
-	checkf(DamageType.Contains(DamageTypeTag), TEXT("GameplayAbility %s does not contain DamageType %s"), *GetNameSafe(this), *DamageTypeTag.ToString());
-	return DamageType[DamageTypeTag].Damage.GetValueAtLevel(InLevel);
+	for(TTuple<FGameplayTag, FAuraDamageGameplayEffect> Pair : DamageType)
+	{
+		if(DamageTypeTag == Pair.Key)
+		{
+			const float ScaledDamage = Pair.Value.Damage.GetValueAtLevel(InLevel);
+			return ScaledDamage;
+		}
+	}
+	return 0.f;
 }

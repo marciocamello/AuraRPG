@@ -48,7 +48,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		ESpawnActorCollisionHandlingMethod::AlwaysSpawn
 	);
 
-	const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+	/*const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
 	FGameplayEffectContextHandle EffectContextHandle = SourceASC->MakeEffectContext();
 	EffectContextHandle.SetAbility(this);
 	EffectContextHandle.AddSourceObject(Projectile);
@@ -68,7 +68,9 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, ScaledDamage);
 	}
 		
-	Projectile->DamageEffectSpecHandle = SpecHandle;
+	Projectile->DamageEffectSpecHandle = SpecHandle;*/
+
+	Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
 		
 	Projectile->FinishSpawning(SpawnTransform);
 }
