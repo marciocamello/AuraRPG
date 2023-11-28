@@ -48,8 +48,7 @@ float UAuraDamageGameplayAbility::GetDamageByDamageType(float InLevel, const FGa
 	{
 		if(DamageTypeTag == Pair.Key)
 		{
-			const float ScaledDamage = Pair.Value.Damage.GetValueAtLevel(InLevel);
-			return ScaledDamage;
+			return Pair.Value.Damage.GetValueAtLevel(InLevel);
 		}
 	}
 	return 0.f;
