@@ -127,15 +127,15 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		{
 			RepBits |= 1 << 2;
 		}
-		if(DebuffDamage > 0.f)
+		if(DebuffDamage.Value > 0.f)
 		{
 			RepBits |= 1 << 3;
 		}
-		if(DebuffDuration > 0.f)
+		if(DebuffDuration.Value > 0.f)
 		{
 			RepBits |= 1 << 4;
 		}
-		if(DebuffFrequency > 0.f)
+		if(DebuffFrequency.Value > 0.f)
 		{
 			RepBits |= 1 << 5;
 		}
@@ -161,15 +161,15 @@ bool FAuraGameplayEffectContext::NetSerialize(FArchive& Ar, UPackageMap* Map, bo
 		}
 		if (RepBits & (1 << 3))
 		{
-			Ar << DebuffDamage;
+			Ar << DebuffDamage.Value;
 		}
 		if (RepBits & (1 << 4))
 		{
-			Ar << DebuffDuration;
+			Ar << DebuffDuration.Value;
 		}
 		if (RepBits & (1 << 5))
 		{
-			Ar << DebuffFrequency;
+			Ar << DebuffFrequency.Value;
 		}
 		if (RepBits & (1 << 6))
 		{

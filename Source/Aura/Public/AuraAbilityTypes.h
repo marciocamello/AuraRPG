@@ -80,17 +80,17 @@ public:
 	bool IsCriticalHit() const { return bICriticalHit; }
 	bool IsBlockedHit() const { return bIsBlockedHit; }
 	bool IsSuccessFulDebuff() const { return bIsSuccessFulDebuff; }
-	float GetDebuffDamage() const { return DebuffDamage; }
-	float GetDebuffDuration() const { return DebuffDuration; }
-	float GetDebuffFrequency() const { return DebuffFrequency; }
+	FScalableFloat GetDebuffDamage() const { return DebuffDamage; }
+	FScalableFloat GetDebuffDuration() const { return DebuffDuration; }
+	FScalableFloat GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 
 	void SetIsCriticalHit(bool bInIsCriticalHit) { bICriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
 	void SetIsSuccessFulDebuff(bool bInIsSuccessFulDebuff) { bIsSuccessFulDebuff = bInIsSuccessFulDebuff; }
-	void SetDebuffDamage(float InDebuffDamage) { DebuffDamage = InDebuffDamage; }
-	void SetDebuffDuration(float InDebuffDuration) { DebuffDuration = InDebuffDuration; }
-	void SetDebuffFrequency(float InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
+	void SetDebuffDamage(FScalableFloat InDebuffDamage) { DebuffDamage = InDebuffDamage; }
+	void SetDebuffDuration(FScalableFloat InDebuffDuration) { DebuffDuration = InDebuffDuration; }
+	void SetDebuffFrequency(FScalableFloat InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
 	
 	/** Returns the actual struct used for serialization, subclasses must override this! */
@@ -127,13 +127,13 @@ protected:
 	bool bIsSuccessFulDebuff = false;
 
 	UPROPERTY()
-	float DebuffDamage = 0.f;
+	FScalableFloat DebuffDamage = 0.f;
 
 	UPROPERTY()
-	float DebuffDuration = 0.f;
+	FScalableFloat DebuffDuration = 0.f;
 
 	UPROPERTY()
-	float DebuffFrequency = 0.f;
+	FScalableFloat DebuffFrequency = 0.f;
 	
 	TSharedPtr<FGameplayTag> DamageType;
 	
