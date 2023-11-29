@@ -77,17 +77,17 @@ struct FAuraGameplayEffectContext : public FGameplayEffectContext
 
 public:
 
-	bool IsCriticalHit() const { return bICriticalHit; }
+	bool IsCriticalHit() const { return bIsCriticalHit; }
 	bool IsBlockedHit() const { return bIsBlockedHit; }
-	bool IsSuccessFulDebuff() const { return bIsSuccessFulDebuff; }
+	bool IsSuccessfulDebuff() const { return bIsSuccessfulDebuff; }
 	FScalableFloat GetDebuffDamage() const { return DebuffDamage; }
 	FScalableFloat GetDebuffDuration() const { return DebuffDuration; }
 	FScalableFloat GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 
-	void SetIsCriticalHit(bool bInIsCriticalHit) { bICriticalHit = bInIsCriticalHit; }
+	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
-	void SetIsSuccessFulDebuff(bool bInIsSuccessFulDebuff) { bIsSuccessFulDebuff = bInIsSuccessFulDebuff; }
+	void SetIsSuccessfulDebuff(bool bInIsSuccessFulDebuff) { bIsSuccessfulDebuff = bInIsSuccessFulDebuff; }
 	void SetDebuffDamage(FScalableFloat InDebuffDamage) { DebuffDamage = InDebuffDamage; }
 	void SetDebuffDuration(FScalableFloat InDebuffDuration) { DebuffDuration = InDebuffDuration; }
 	void SetDebuffFrequency(FScalableFloat InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
@@ -121,10 +121,10 @@ protected:
 	bool bIsBlockedHit = false;
 
 	UPROPERTY()
-	bool bICriticalHit = false;
+	bool bIsCriticalHit = false;
 	
 	UPROPERTY()
-	bool bIsSuccessFulDebuff = false;
+	bool bIsSuccessfulDebuff = false;
 
 	UPROPERTY()
 	FScalableFloat DebuffDamage = 0.f;

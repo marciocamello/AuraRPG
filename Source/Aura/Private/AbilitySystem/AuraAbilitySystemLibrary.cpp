@@ -152,11 +152,11 @@ bool UAuraAbilitySystemLibrary::IsCriticalHit(const FGameplayEffectContextHandle
 	return false;
 }
 
-bool UAuraAbilitySystemLibrary::IsSuccessFulDebuff(const FGameplayEffectContextHandle& EffectContextHandle)
+bool UAuraAbilitySystemLibrary::IsSuccessfulDebuff(const FGameplayEffectContextHandle& EffectContextHandle)
 {
 	if(const FAuraGameplayEffectContext* AuraEffectContext = static_cast<const FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{
-		return AuraEffectContext->IsSuccessFulDebuff();
+		return AuraEffectContext->IsSuccessfulDebuff();
 	}
 	return false;
 }
@@ -216,12 +216,12 @@ void UAuraAbilitySystemLibrary::SetIsCriticalHit(FGameplayEffectContextHandle& E
 	}
 }
 
-void UAuraAbilitySystemLibrary::SetIsSuccessFulDebuff(FGameplayEffectContextHandle& EffectContextHandle,
-	bool bIsSuccessFulDebuff)
+void UAuraAbilitySystemLibrary::SetIsSuccessfulDebuff(FGameplayEffectContextHandle& EffectContextHandle,
+	bool bIsSuccessfulDebuff)
 {
 	if(FAuraGameplayEffectContext* AuraEffectContext = static_cast<FAuraGameplayEffectContext*>(EffectContextHandle.Get()))
 	{
-		AuraEffectContext->SetIsSuccessFulDebuff(bIsSuccessFulDebuff);
+		AuraEffectContext->SetIsSuccessfulDebuff(bIsSuccessfulDebuff);
 	}
 }
 

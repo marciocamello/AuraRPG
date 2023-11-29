@@ -313,7 +313,7 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 		const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
 		const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
 		ShowFloatingText(EffectProperties, LocalInComingDamage, bBlockedHit, bCriticalHit);
-		if(UAuraAbilitySystemLibrary::IsSuccessFulDebuff(EffectProperties.EffectContextHandle))
+		if(UAuraAbilitySystemLibrary::IsSuccessfulDebuff(EffectProperties.EffectContextHandle))
 		{
 			Debuff(EffectProperties);
 		}
@@ -370,10 +370,14 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& EffectProperties)
 	GameplayEffect->Period = DebuffFrequency;
 	GameplayEffect->DurationMagnitude = DebuffDuration;
 
-	UTargetTagsGameplayEffectComponent& Component = GameplayEffect->AddComponent<UTargetTagsGameplayEffectComponent>();
+	FGameplayTagContainer GrantedTags = GameplayEffect->GetGrantedTags();
+	GrantedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+
 	FInheritedTagContainer TagContainer = FInheritedTagContainer();
+	UTargetTagsGameplayEffectComponent& Component = GameplayEffect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
+	TagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	TagContainer.CombinedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 	Component.SetAndApplyTargetTagChanges(TagContainer);
-	TagContainer.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
 
 	GameplayEffect->StackingType = EGameplayEffectStackingType::AggregateBySource;
 	GameplayEffect->StackLimitCount = 1;
@@ -386,14 +390,13 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& EffectProperties)
 	ModifierInfo.ModifierOp = EGameplayModOp::Additive;
 	ModifierInfo.Attribute = UAuraAttributeSet::GetIncomingDamageAttribute();
 
-	FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(GameplayEffect, EffectContextHandle, 1);
-	if(MutableSpec)
+	if(FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(GameplayEffect, EffectContextHandle, 1))
 	{
 		FAuraGameplayEffectContext* AuraContext = static_cast<FAuraGameplayEffectContext*>(MutableSpec->GetContext().Get());
 		TSharedPtr<FGameplayTag> DebuffDamageType = MakeShareable(new FGameplayTag(DamageType));
 		AuraContext->SetDamageType(DebuffDamageType);
+		
+		EffectProperties.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}
-
-	EffectProperties.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 }
 

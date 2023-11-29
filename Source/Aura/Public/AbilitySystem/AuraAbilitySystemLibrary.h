@@ -58,7 +58,7 @@ public:
 	static bool IsCriticalHit(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	UFUNCTION(BlueprintPure, Category= "Aura Ability System Library|Gameplay Effects")
-	static bool IsSuccessFulDebuff(const FGameplayEffectContextHandle& EffectContextHandle);
+	static bool IsSuccessfulDebuff(const FGameplayEffectContextHandle& EffectContextHandle);
 
 	UFUNCTION(BlueprintPure, Category= "Aura Ability System Library|Gameplay Effects")
 	static FScalableFloat GetDebuffDamage(const FGameplayEffectContextHandle& EffectContextHandle);
@@ -79,7 +79,7 @@ public:
 	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bIsCriticalHit);
 
 	UFUNCTION(BlueprintCallable, Category= "Aura Ability System Library|Gameplay Effects")
-	static void SetIsSuccessFulDebuff(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bIsSuccessFulDebuff);
+	static void SetIsSuccessfulDebuff(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bIsSuccessfulDebuff);
 
 	UFUNCTION(BlueprintCallable, Category= "Aura Ability System Library|Gameplay Effects")
 	static void SetDebuffDamage(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, FScalableFloat InDebuffDamage);
