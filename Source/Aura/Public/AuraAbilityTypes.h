@@ -29,6 +29,9 @@ struct FAuraDamageGameplayEffect
 
 	UPROPERTY(EditDefaultsOnly, Category="Damage")
 	FScalableFloat DebuffDuration = 5.f;
+	
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FScalableFloat DeathImpulseMagnitude = 60.f;
 };
 
 USTRUCT(BlueprintType)
@@ -55,18 +58,6 @@ struct FDamageEffectParams
 	
 	UPROPERTY()
 	TMap<FGameplayTag, FAuraDamageGameplayEffect> DamageType;
-
-	UPROPERTY()
-	FScalableFloat DebuffChance = 20.f;
-
-	UPROPERTY()
-	FScalableFloat DebuffDamage = 5.f;
-
-	UPROPERTY()
-	FScalableFloat DebuffFrequency = 1.f;
-
-	UPROPERTY()
-	FScalableFloat DebuffDuration = 5.f; 
 	
 };
 
