@@ -32,6 +32,9 @@ struct FAuraDamageGameplayEffect
 	
 	UPROPERTY(EditDefaultsOnly, Category="Damage")
 	FScalableFloat DeathImpulseMagnitude = 60.f;
+
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FVector DeathImpulse = FVector::ZeroVector;
 };
 
 USTRUCT(BlueprintType)
@@ -58,7 +61,6 @@ struct FDamageEffectParams
 	
 	UPROPERTY()
 	TMap<FGameplayTag, FAuraDamageGameplayEffect> DamageType;
-	
 };
 
 USTRUCT(BlueprintType)
@@ -75,6 +77,7 @@ public:
 	FScalableFloat GetDebuffDuration() const { return DebuffDuration; }
 	FScalableFloat GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
+	FVector GetDeathImpulse() const { return DeathImpulse; }
 
 	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
@@ -83,6 +86,7 @@ public:
 	void SetDebuffDuration(FScalableFloat InDebuffDuration) { DebuffDuration = InDebuffDuration; }
 	void SetDebuffFrequency(FScalableFloat InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
+	void SetDeathImpulse(FVector InDeathImpulse) { DeathImpulse = InDeathImpulse; }
 	
 	/** Returns the actual struct used for serialization, subclasses must override this! */
 	virtual UScriptStruct* GetScriptStruct() const override
@@ -127,6 +131,9 @@ protected:
 	FScalableFloat DebuffFrequency = 0.f;
 	
 	TSharedPtr<FGameplayTag> DamageType;
+
+	UPROPERTY()
+	FVector DeathImpulse = FVector::ZeroVector;
 	
 };
 

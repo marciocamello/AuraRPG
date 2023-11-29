@@ -25,6 +25,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta=(ExposeOnSpawn = true))
 	FDamageEffectParams DamageEffectParams;
 
+	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	FGameplayTag DamageType = FGameplayTag();
+
 protected:
 	virtual void BeginPlay() override;
 	void ApplyImpactEffects();
