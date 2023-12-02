@@ -27,6 +27,20 @@ FDamageEffectParams UAuraDamageGameplayAbility::MakeDamageEffectParamsFromClassD
 	Params.BaseDamage = GetDamageByDamageType(GetAbilityLevel(), FGameplayTag::EmptyTag);
 	Params.AbilityLevel = GetAbilityLevel();
 	Params.DamageType = DamageType;
+	if(IsValid(TargetActor))
+	{
+		FRotator Rotation = (TargetActor->GetActorLocation() - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
+		Rotation.Pitch = 45.f;
+		const FVector ToTarget = Rotation.Vector();
+		for(TTuple<FGameplayTag, FAuraDamageGameplayEffect> Pair : DamageType)
+		{
+			if (Params.DamageType.Contains(Pair.Key) && DamageType.Contains(Pair.Key))
+			{
+				Params.DamageType[Pair.Key].DeathImpulse = ToTarget * DamageType[Pair.Key].DeathImpulseMagnitude.Value;
+				Params.DamageType[Pair.Key].KnockBackForce = ToTarget * DamageType[Pair.Key].KnockBackForceMagnitude.Value;
+			}
+		}
+	}
 	
 	return Params;
 }

@@ -12,29 +12,38 @@ struct FAuraDamageGameplayEffect
 {
 	GENERATED_BODY()
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	TSubclassOf<UGameplayEffect> DamageEffectClass;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
 	FScalableFloat Damage;
 
-	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
 	FScalableFloat DebuffChance = 20.f;
 
-	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
 	FScalableFloat DebuffDamage = 5.f;
 
-	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
 	FScalableFloat DebuffFrequency = 1.f;
 
-	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
 	FScalableFloat DebuffDuration = 5.f;
 	
-	UPROPERTY(EditDefaultsOnly, Category="Damage")
-	FScalableFloat DeathImpulseMagnitude = 60.f;
-
-	UPROPERTY(EditDefaultsOnly, Category="Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
+	FScalableFloat DeathImpulseMagnitude = 1000.f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
 	FVector DeathImpulse = FVector::ZeroVector;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
+	FScalableFloat KnockBackForceMagnitude = 1000.f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
+	FScalableFloat KnockBackChance = 0.f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category="Damage")
+	FVector KnockBackForce = FVector::ZeroVector;
 };
 
 USTRUCT(BlueprintType)
@@ -44,22 +53,22 @@ struct FDamageEffectParams
 
 	FDamageEffectParams(){}
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UObject> WorldContextObject = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> SourceAbilitySystemComponent = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<UAbilitySystemComponent> TargetAbilitySystemComponent = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float BaseDamage = 0.f;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	float AbilityLevel = 1.f;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TMap<FGameplayTag, FAuraDamageGameplayEffect> DamageType;
 };
 
@@ -78,6 +87,7 @@ public:
 	FScalableFloat GetDebuffFrequency() const { return DebuffFrequency; }
 	TSharedPtr<FGameplayTag> GetDamageType() const { return DamageType; }
 	FVector GetDeathImpulse() const { return DeathImpulse; }
+	FVector GetKnockBackForce() const { return KnockBackForce; }
 
 	void SetIsCriticalHit(bool bInIsCriticalHit) { bIsCriticalHit = bInIsCriticalHit; }
 	void SetIsBlockedHit(bool bInIsBlockedHit) { bIsBlockedHit = bInIsBlockedHit; }
@@ -87,6 +97,7 @@ public:
 	void SetDebuffFrequency(FScalableFloat InDebuffFrequency) { DebuffFrequency = InDebuffFrequency; }
 	void SetDamageType(TSharedPtr<FGameplayTag> InDamageType) { DamageType = InDamageType; }
 	void SetDeathImpulse(FVector InDeathImpulse) { DeathImpulse = InDeathImpulse; }
+	void SetKnockBackForce(FVector InKnockBackForce) { KnockBackForce = InKnockBackForce; }
 	
 	/** Returns the actual struct used for serialization, subclasses must override this! */
 	virtual UScriptStruct* GetScriptStruct() const override
@@ -135,6 +146,8 @@ protected:
 	UPROPERTY()
 	FVector DeathImpulse = FVector::ZeroVector;
 	
+	UPROPERTY()
+	FVector KnockBackForce =FVector::ZeroVector;
 };
 
 template<>
