@@ -4,6 +4,7 @@
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
 
 #include "AuraGameplayTags.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 
 FString UAuraFireBolt::GetDescription(int32 Level, FText Title, FText Description)
@@ -66,4 +67,30 @@ FString UAuraFireBolt::GetNextLevelDescription(int32 Level, FText Title, FText D
 	const int32 NumProjectilesByLevel = FMath::Min(Level, NumProjectiles);
 	const FText FormattedText = FText::Format(Description, FText::AsNumber(NumProjectilesByLevel));
 	return Template.Replace(TEXT("{Description}"), *FormattedText.ToString());
+}
+
+void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, const FTaggedMontage& AttackMontage,
+	bool bOverridePitch, float PitchOverride, AActor* HomingTarget)
+{
+	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
+	if(!bIsServer) return;
+
+	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocationFromAttackMontage(
+		GetAvatarActorFromActorInfo(),
+		AttackMontage
+	);
+	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+	if(bOverridePitch)
+	{
+		Rotation.Pitch = PitchOverride;
+	}
+	UKismetSystemLibrary::DrawDebugArrow(
+		GetAvatarActorFromActorInfo(),
+		SocketLocation,
+		SocketLocation + Rotation.Vector() * 100.f,
+		5,
+		FLinearColor::Green,
+		120,
+		5.f
+	);
 }
