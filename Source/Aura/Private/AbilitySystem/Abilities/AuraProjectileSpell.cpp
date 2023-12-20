@@ -29,11 +29,9 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		GetAvatarActorFromActorInfo(),
 		AttackMontage
 	);
+	
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
-	if(bOverridePitch)
-	{
-		Rotation.Pitch = PitchOverride;
-	}
+	if(bOverridePitch) Rotation.Pitch = PitchOverride;
 	
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SocketLocation);

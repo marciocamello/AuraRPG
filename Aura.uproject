@@ -72,6 +72,10 @@
 		{
 			"Name": "GameplayMessageRouter",
 			"Enabled": true
+		},
+		{
+			"Name": "HoudiniEngine",
+			"Enabled": false
 		}
 	]
 }

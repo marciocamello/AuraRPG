@@ -79,18 +79,77 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 		GetAvatarActorFromActorInfo(),
 		AttackMontage
 	);
+	
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
-	if(bOverridePitch)
+	if(bOverridePitch) Rotation.Pitch = PitchOverride;
+
+	const FVector Forward = Rotation.Vector();
+	const FVector LeftOfSpread = Forward.RotateAngleAxis(-ProjectileSpread / 2, FVector::UpVector);
+	const FVector RightOfSpread = Forward.RotateAngleAxis(ProjectileSpread / 2, FVector::UpVector);
+	
+	//NumProjectiles = FMath::Min(MaxNumProjectiles, GetAbilityLevel());
+	if(NumProjectiles > 1)
 	{
-		Rotation.Pitch = PitchOverride;
+		const float DeltaSpread = ProjectileSpread / (NumProjectiles - 1);
+		for(int32 i = 0; i < NumProjectiles; i++)
+		{
+			const FVector Direction = LeftOfSpread.RotateAngleAxis(DeltaSpread * i, FVector::UpVector);
+			const FVector Start = SocketLocation + FVector(0.f,0.f,5.f);
+			const FVector End = Start + Direction * 75.f;
+			UKismetSystemLibrary::DrawDebugArrow(
+				GetAvatarActorFromActorInfo(),
+				Start,
+				End,
+				5,
+				FLinearColor::Red,
+				120,
+				2.f
+			);
+		}
 	}
+	else
+	{
+		//Single projectile
+		const FVector Start = SocketLocation + FVector(0.f,0.f,5.f);
+		const FVector End = Start + Forward * 75.f;
+		UKismetSystemLibrary::DrawDebugArrow(
+			GetAvatarActorFromActorInfo(),
+			Start,
+			End,
+			5,
+			FLinearColor::Red,
+			120,
+			2.f
+		);
+	}
+	
 	UKismetSystemLibrary::DrawDebugArrow(
 		GetAvatarActorFromActorInfo(),
 		SocketLocation,
-		SocketLocation + Rotation.Vector() * 100.f,
+		SocketLocation + Forward * 100.f,
 		5,
-		FLinearColor::Green,
+		FLinearColor::White,
 		120,
-		5.f
+		2.f
+	);
+	
+	UKismetSystemLibrary::DrawDebugArrow(
+		GetAvatarActorFromActorInfo(),
+		SocketLocation,
+		SocketLocation + LeftOfSpread * 100.f,
+		5,
+		FLinearColor::Gray,
+		120,
+		1.f
+		);
+	
+	UKismetSystemLibrary::DrawDebugArrow(
+		GetAvatarActorFromActorInfo(),
+		SocketLocation,
+		SocketLocation + RightOfSpread * 100.f,
+		5,
+		FLinearColor::Gray,
+		120,
+		1.f
 	);
 }
