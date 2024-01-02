@@ -48,12 +48,18 @@ void AAuraProjectile::ApplyImpactEffects()
 	if(LoopingSoundComponent != nullptr)
 	{
 		LoopingSoundComponent->Stop();
-		bHit = true;
+		LoopingSoundComponent->DestroyComponent();
 	}
+	bHit = true;
 }
 
 void AAuraProjectile::Destroyed()
 {
+	if(LoopingSoundComponent != nullptr)
+	{
+		LoopingSoundComponent->Stop();
+		LoopingSoundComponent->DestroyComponent();
+	}
 	if(!bHit && !HasAuthority()) ApplyImpactEffects();
 	Super::Destroyed();
 }
