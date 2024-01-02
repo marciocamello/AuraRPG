@@ -4,6 +4,7 @@
 #include "AbilitySystem/Abilities/AuraFireBolt.h"
 
 #include "AuraGameplayTags.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 
@@ -84,7 +85,38 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 	if(bOverridePitch) Rotation.Pitch = PitchOverride;
 
 	const FVector Forward = Rotation.Vector();
-	const FVector LeftOfSpread = Forward.RotateAngleAxis(-ProjectileSpread / 2, FVector::UpVector);
+	
+	TArray<FVector> Directions = UAuraAbilitySystemLibrary::EvenlyRotatedVectors(Forward, FVector::UpVector, ProjectileSpread, NumProjectiles);
+	TArray<FRotator> Rotations = UAuraAbilitySystemLibrary::EvenlySpacedRotators(Forward, FVector::UpVector, ProjectileSpread, NumProjectiles);
+
+	for(FVector& Direction : Directions)
+	{
+		UKismetSystemLibrary::DrawDebugArrow(
+			GetAvatarActorFromActorInfo(),
+			SocketLocation,
+			SocketLocation + Direction * 75.f,
+			5,
+			FLinearColor::Red,
+			120,
+			2.f
+		);
+	}
+
+	for(FRotator& Rot : Rotations)
+	{
+		const FVector Start = SocketLocation + FVector(0.f,0.f,5.f);
+		UKismetSystemLibrary::DrawDebugArrow(
+			GetAvatarActorFromActorInfo(),
+			Start,
+			Start + Rot.Vector() * 75.f,
+			5,
+			FLinearColor::Blue,
+			120,
+			2.f
+		);
+	}
+	
+	/*const FVector LeftOfSpread = Forward.RotateAngleAxis(-ProjectileSpread / 2, FVector::UpVector);
 	const FVector RightOfSpread = Forward.RotateAngleAxis(ProjectileSpread / 2, FVector::UpVector);
 	
 	//NumProjectiles = FMath::Min(MaxNumProjectiles, GetAbilityLevel());
@@ -151,5 +183,5 @@ void UAuraFireBolt::SpawnProjectiles(const FVector& ProjectileTargetLocation, co
 		FLinearColor::Gray,
 		120,
 		1.f
-	);
+	);*/
 }
