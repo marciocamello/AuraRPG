@@ -28,6 +28,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category="Damage")
 	FGameplayTag DamageType = FGameplayTag();
 
+	UPROPERTY()
+	TObjectPtr<USceneComponent> HomingTargetSceneComponent;
+
 protected:
 	virtual void BeginPlay() override;
 	void ApplyImpactEffects();
