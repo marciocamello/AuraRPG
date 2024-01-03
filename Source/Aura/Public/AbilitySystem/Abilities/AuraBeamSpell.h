@@ -19,7 +19,7 @@ public:
 	void StoreMouseDataInfo(const FHitResult& HitResult);
 
 	UFUNCTION(BlueprintCallable, Category="Beam")
-	void StoreOwnerPlayerController();
+	void StoreOwnerVariables();
 protected:
 
 	UPROPERTY(BlueprintReadWrite, Category="Beam")
@@ -29,5 +29,11 @@ protected:
 	TObjectPtr<AActor> MouseHitActor;
 
 	UPROPERTY(BlueprintReadWrite, Category="Beam")
-	TObjectPtr<APlayerController> OwningPlayerController;
+	TObjectPtr<APlayerController> OwnerPlayerController;
+
+	UPROPERTY(BlueprintReadWrite, Category="Beam")
+	TObjectPtr<ACharacter> OwnerCharacter;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Beam")
+	TObjectPtr<UAnimMontage> MontageElectrocute;
 };
