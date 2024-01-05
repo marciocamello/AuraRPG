@@ -10,6 +10,7 @@
 #include "Aura/Aura.h"
 #include "Components/CapsuleComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Net/UnrealNetwork.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
@@ -208,5 +209,11 @@ void AAuraCharacterBase::Dissolve()
 		Weapon->SetMaterial(0, DynamicMaterialInstance);
 		StartWeaponDissolveTimeline(DynamicMaterialInstance);
 	}
+}
+
+void AAuraCharacterBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);	
+	DOREPLIFETIME(AAuraCharacterBase, InShockLoop);
 }
 

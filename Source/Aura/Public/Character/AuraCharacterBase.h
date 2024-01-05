@@ -112,7 +112,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	USoundBase* DeathSound;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	UPROPERTY(EditAnywhere, Replicated, BlueprintReadWrite, Category = "Combat")
 	bool InShockLoop = false;
 
 	/* Minions */
