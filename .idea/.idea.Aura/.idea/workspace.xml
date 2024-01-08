@@ -10,9 +10,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d3f718d-5a2f-4d9b-8651-30c18cfb63d7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Lightining/GE_Cooldown_Electrocute.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Lightining/GE_Cost_Electrocute.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGameplayTags.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Lightining/GA_Electrocute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Lightining/GA_Electrocute.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/L_Dungeon.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/L_Dungeon.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Data/CT_Cost.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Data/CT_Cost.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Data/CT_Damage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Data/CT_Damage.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +177,7 @@
       <workItem from="1704560971069" duration="681000" />
       <workItem from="1704561883436" duration="5247000" />
       <workItem from="1704648499009" duration="1196000" />
-      <workItem from="1704715793058" duration="6331000" />
+      <workItem from="1704715793058" duration="6948000" />
     </task>
     <servers />
   </component>
