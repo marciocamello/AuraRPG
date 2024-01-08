@@ -23,6 +23,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Beam")
 	void TraceFirstTarget(const FVector& BeamTargetLocation);
+	
+	UFUNCTION(BlueprintCallable, Category="Beam")
+	void StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets);
 protected:
 
 	UPROPERTY(BlueprintReadWrite, Category="Beam")
@@ -39,4 +42,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Beam")
 	TObjectPtr<UAnimMontage> MontageElectrocute;
+
+	UPROPERTY(EditDefaultsOnly, Category="Beam")
+	int32 MaxNumShockTargets = 5;
 };
