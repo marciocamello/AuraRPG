@@ -49,6 +49,11 @@ void AAuraCharacterBase::Die(const FVector& DeathImpulse)
 	MulticastHandleDeath_Implementation(DeathImpulse);
 }
 
+FOnDeathSignature& AAuraCharacterBase::GetOnDeathDelegateSign()
+{
+	return OnDeathDelegateSign;
+}
+
 void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& DeathImpulse)
 {
 	if(DeathSound != nullptr)
@@ -71,6 +76,7 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation(const FVector& Deat
 	Dissolve();
 	bDead = true;
 	DebuffNiagaraComponent->Deactivate();
+	OnDeathDelegateSign.Broadcast(this);
 }
 
 void AAuraCharacterBase::BeginPlay()

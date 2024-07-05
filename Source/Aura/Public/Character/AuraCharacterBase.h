@@ -31,6 +31,7 @@ public:
 	/** ICombatInterface */
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	virtual void Die(const FVector& DeathImpulse) override;
+	virtual FOnDeathSignature& GetOnDeathDelegateSign() override;
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& SocketTag) override;
 	virtual FVector GetCombatSocketLocationFromAttackMontage_Implementation(const FTaggedMontage& AttackMontage) override;
 	virtual bool IsDead_Implementation() const override;
@@ -48,6 +49,7 @@ public:
 
 	FOnASCRegistered OnAscRegistered;
 	FOnDeath OnDeath;
+	FOnDeathSignature OnDeathDelegateSign; 
 
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath(const FVector& DeathImpulse);
