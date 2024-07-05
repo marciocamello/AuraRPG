@@ -22,6 +22,9 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr) const;
+
+	UFUNCTION(BlueprintPure)
+	float GetDamageAtLevel(FGameplayTag DamageTypeTag) const;
 	
 protected:
 	
