@@ -310,7 +310,7 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 			EffectProperties.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 
 			const FVector& KnockBackForce = UAuraAbilitySystemLibrary::GetKnockBackForce(EffectProperties.EffectContextHandle);
-			if(!KnockBackForce.IsNearlyZero(10.f))
+			if(!KnockBackForce.IsNearlyZero(1.f))
 			{
 				EffectProperties.TargetCharacter->LaunchCharacter(KnockBackForce, true, true);
 			}

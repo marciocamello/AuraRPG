@@ -1,0 +1,15 @@
+/.git
+/.idea
+/.vs
+/.vscode
+/Content
+/Data
+/DerivedDataCache
+/Intermediate
+/Platforms
+/Saved
+/Plugins/CommonGame/Intermediate
+/Plugins/CommonUser/Intermediate
+/Plugins/Developer/RiderLink/Intermediate
+/Plugins/GameplayMessageRouter/Intermediate
+/Plugins/ModularGameplayActors/Intermediate
