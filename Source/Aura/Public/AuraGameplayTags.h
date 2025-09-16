@@ -96,6 +96,11 @@ public:
 	// lightning abilities
 	FGameplayTag Abilities_Lightning_Electrocute;
 
+	// Passive abilities
+	FGameplayTag Abilities_Passive_HaloOfProtection;
+	FGameplayTag Abilities_Passive_LifeSiphon;
+	FGameplayTag Abilities_Passive_ManaSiphon;
+
 	// cooldowns
 	FGameplayTag Cooldown_Fire_FireBolt;
 

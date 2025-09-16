@@ -277,7 +277,7 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 	}
 }
 
-void UAuraAbilitySystemComponent::ClientEquipAbility(const FGameplayTag& AbilityTag, const FGameplayTag& Status,
+void UAuraAbilitySystemComponent::ClientEquipAbility_Implementation(const FGameplayTag& AbilityTag, const FGameplayTag& Status,
 	const FGameplayTag& SlotTag, const FGameplayTag& PreviousTag)
 {
 	AbilityEquipped.Broadcast(AbilityTag, Status, SlotTag, PreviousTag);
