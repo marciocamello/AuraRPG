@@ -341,16 +341,16 @@ void UAuraAttributeSet::HandleIncomingXP(const FEffectProperties& EffectProperti
 		const int32 CurrentXP = IPlayerInterface::Execute_GetXP(EffectProperties.SourceCharacter);
 
 		const int32 NewLevel = IPlayerInterface::Execute_FindLevelForXP(EffectProperties.SourceCharacter, CurrentXP + LocalIncomingXP);
-		const int32 NumLevelUPs = NewLevel - CurrentLevel;
-		if(NumLevelUPs > 0)
+		const int32 NumLevelUps = NewLevel - CurrentLevel;
+		if(NumLevelUps > 0)
 		{
 			
-			IPlayerInterface::Execute_AddToPlayerLevel(EffectProperties.SourceCharacter, NumLevelUPs);
+			IPlayerInterface::Execute_AddToPlayerLevel(EffectProperties.SourceCharacter, NumLevelUps);
 
 			int32 AttributePointsReward = 0;
 			int32 SpellPointsReward = 0;
 
-			for (int32 i = 0; i < NumLevelUPs - 1; i++)
+			for (int32 i = 0; i < NumLevelUps; ++i)
 			{
 				SpellPointsReward += IPlayerInterface::Execute_GetSpellPointsReward(EffectProperties.SourceCharacter, CurrentLevel + i);
 				AttributePointsReward += IPlayerInterface::Execute_GetAttributePointsReward(EffectProperties.SourceCharacter, CurrentLevel + i);

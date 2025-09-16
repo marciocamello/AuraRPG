@@ -260,7 +260,11 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 		const bool bStatusValid = Status == GameplayTags.Abilities_Status_Equipped || Status == GameplayTags.Abilities_Status_Unlocked;
 		if(bStatusValid)
 		{
-			// Remove this input tag (slot) from any abilities hat has it
+			// Handle activation/deactivation for passive abilities
+
+			// 
+			
+			/*// Remove this input tag (slot) from any ability hat has it
 			ClearAbilityOfSlot(SlotTag);
 			// clear this ability slot,just in cas, it's a different slot
 			ClearSlot(AbilitySpec);
@@ -270,7 +274,8 @@ void UAuraAbilitySystemComponent::ServerEquipAbility_Implementation(const FGamep
 			{
 				AbilitySpec->GetDynamicSpecSourceTags().RemoveTag(GameplayTags.Abilities_Status_Unlocked);
 				AbilitySpec->GetDynamicSpecSourceTags().AddTag(GameplayTags.Abilities_Status_Equipped);
-			}
+			}*/
+			
 			MarkAbilitySpecDirty(*AbilitySpec);
 		}
 		ClientEquipAbility(AbilityTag, GameplayTags.Abilities_Status_Equipped, SlotTag, PrefSlot);
