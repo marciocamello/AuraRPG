@@ -9,10 +9,41 @@
   <component name="ChangeListManager">
     <list default="true" id="26e232d7-edb2-4c22-a6f6-60df85cf6365" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Aura.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Aura.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Characters/Aura/Animations/Abilities/AM_Cast_Electrocute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Characters/Aura/Animations/Abilities/AM_Cast_Electrocute.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Effects/Projectiles/FireExplosion/NS_FireExplosion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Effects/Projectiles/FireExplosion/NS_FireExplosion.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Slingshot/AM_HitReact_Goblin_Slingshot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Slingshot/AM_HitReact_Goblin_Slingshot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Spear/AM_HitReact_GoblinSpear.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Assets/Enemies/Goblin/Animations/Spear/AM_HitReact_GoblinSpear.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AI/BehaviorTree/BB_EnemyBlackboard.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AI/BehaviorTree/BB_EnemyBlackboard.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AI/BehaviorTree/BT_Elementalist_BehaviorTree.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AI/BehaviorTree/BT_Elementalist_BehaviorTree.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AI/BehaviorTree/BT_EnemyBehaviorTree.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AI/BehaviorTree/BT_EnemyBehaviorTree.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Fire/FireBolt/BP_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Fire/FireBolt/BP_FireBolt.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Fire/FireBolt/GA_FireBolt.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Fire/FireBolt/GA_FireBolt.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Lightining/GA_Electrocute.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Aura/Abilties/Lightining/GA_Electrocute.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Data/CT_Damage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Data/CT_Damage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Abilities/GA_MeleeAttack.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/Enemy/Abilities/GA_MeleeAttack.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/GameplayCueNotifies/GC_ShockLoop.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/AbilitySystem/GameplayCueNotifies/GC_ShockLoop.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/ABP_AuraTopDown.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/ABP_AuraTopDown.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/BP_AuraCharacter_Topdown.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Aura/BP_AuraCharacter_Topdown.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAbilitySystemComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAbilitySystemComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/ABP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/ABP_Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/BP_EnemyBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/BP_EnemyBase.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Demon/BP_Demon_Ranger.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Demon/BP_Demon_Ranger.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Demon/BP_Demon_Warrior.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Demon/BP_Demon_Warrior.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Ghoul/BP_Ghoul.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Ghoul/BP_Ghoul.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Goblin_Slingshot/BP_Goblin_Slingshot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Goblin_Slingshot/BP_Goblin_Slingshot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Goblin_Spear/BP_Goblin_Spear.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Goblin_Spear/BP_Goblin_Spear.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Shaman/BP_Shaman.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Character/Enemies/Shaman/BP_Shaman.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/UI/ProgressBar/W_EnemyHealthBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/UI/ProgressBar/W_EnemyHealthBar.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/L_Dungeon.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/L_Dungeon.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAttributeSet.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/AbilitySystem/AuraAttributeSet.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Actor/AuraProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Actor/AuraProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraCharacterBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Private/Character/AuraEnemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraCharacterBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Character/AuraEnemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Aura/Public/Interaction/CombatInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Aura/Public/Interaction/CombatInterface.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +71,28 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/Aura/UHT/AuraGameModeBase.gen.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/Abilities/GameplayAbilityTargetActor.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/AbilitySystemComponent_Abilities.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/GameplayCueFunctionLibrary.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Plugins/Runtime/GameplayAbilities/Source/GameplayAbilities/Private/GameplayEffect.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/AITestSuite/Classes/BehaviorTree/TestBTDecorator_LoopUntil.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/AITestSuite/Classes/BehaviorTree/TestBTTask_Log.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/AutomationController/Private/AutomationCommandline.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/BSPUtils/Private/BSPUtils.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/CQTest/Private/Components/MapTestSpawner.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/CollisionAnalyzer/Private/CollisionAnalyzer.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/CookedEditor/Public/CookedEditorTargetPlatformSettings.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Developer/EditorAnalyticsSession/Private/EditorAnalyticsSession.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Editor/KismetCompiler/Internal/BlueprintClassFlagUtils.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Editor/KismetCompiler/Private/KismetCompiler.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/CoreUObject/Tests/Serialization/EditorBulkDataTests.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Classes/GameFramework/CharacterMovementComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Private/Components/CharacterMovementComponent.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Private/PhysicsEngine/SimpleSuspension.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/Engine/Public/WorldPartition/HLOD/DestructibleHLODComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/GameplayTags/Classes/GameplayTagContainer.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://G:/UnrealEngine/UE_5.6/Engine/Source/Runtime/GameplayTags/Private/GameplayTagContainer.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -53,23 +102,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Uproject.Aura.executor": "Run",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Uproject.Aura.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Aura" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">
@@ -155,13 +204,16 @@
       <updated>1704379189602</updated>
       <workItem from="1704379191695" duration="40000" />
       <workItem from="1757850728240" duration="2271000" />
-      <workItem from="1757884052060" duration="3049000" />
+      <workItem from="1757884052060" duration="4754000" />
+      <workItem from="1757925052742" duration="7970000" />
+      <workItem from="1758011935430" duration="11907000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

@@ -305,9 +305,12 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 		}
 		else
 		{
-			FGameplayTagContainer TagContainer;
-			TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
-			EffectProperties.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+			if (EffectProperties.TargetCharacter->Implements<UCombatInterface>() && !ICombatInterface::Execute_IsBeingShocked(EffectProperties.TargetCharacter))
+			{
+				FGameplayTagContainer TagContainer;
+				TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
+				EffectProperties.TargetASC->TryActivateAbilitiesByTag(TagContainer);	
+			}
 
 			const FVector& KnockBackForce = UAuraAbilitySystemLibrary::GetKnockBackForce(EffectProperties.EffectContextHandle);
 			if(!KnockBackForce.IsNearlyZero(1.f))
@@ -377,13 +380,24 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& EffectProperties)
 	GameplayEffect->DurationMagnitude = DebuffDuration;
 
 	FGameplayTagContainer GrantedTags = GameplayEffect->GetGrantedTags();
-	GrantedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
+	const FGameplayTag& DebuffTag = GameplayTags.DamageTypesToDebuffs[DamageType];
 
 	FInheritedTagContainer TagContainer = FInheritedTagContainer();
-	UTargetTagsGameplayEffectComponent& Component = GameplayEffect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
-	TagContainer.Added.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
-	TagContainer.CombinedTags.AddTag(GameplayTags.DamageTypesToDebuffs[DamageType]);
-	Component.SetAndApplyTargetTagChanges(TagContainer);
+	UTargetTagsGameplayEffectComponent& AssetTagsComponent = GameplayEffect->FindOrAddComponent<UTargetTagsGameplayEffectComponent>();
+	
+	TagContainer.Added.AddTag(DebuffTag);
+	TagContainer.CombinedTags.AddTag(DebuffTag);
+	
+	GrantedTags.AddTag(DebuffTag);
+	if (DebuffTag.MatchesTagExact(GameplayTags.Debuff_Stun))
+	{
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_CursorTrace);
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_InputPressed);
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_InputHeld);
+		TagContainer.Added.AddTag(GameplayTags.Player_Block_InputReleased);
+	}
+	
+	AssetTagsComponent.SetAndApplyTargetTagChanges(TagContainer);
 
 	GameplayEffect->StackingType = EGameplayEffectStackingType::AggregateBySource;
 	GameplayEffect->StackLimitCount = 1;

@@ -43,9 +43,11 @@ public:
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
-	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override;
+	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override;
 	virtual FOnDeath GetOnDeathDelegate() override;
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override;
+	virtual void SetIsBeingShocked_Implementation(bool bInShock) override;
+	virtual bool IsBeingShocked_Implementation() const override;
 	/** end ICombatInterface */
 
 	FOnASCRegistered OnAscRegistered;
@@ -58,8 +60,20 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
 
+	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
+	bool bIsStunned = false;
+
+	UPROPERTY(ReplicatedUsing=OnRep_Burned, BlueprintReadOnly)
+	bool bIsBurned = false;
+
 	UPROPERTY(Replicated, BlueprintReadOnly)
-	bool bIStunned = false;
+	bool bIsBeingShocked = false;
+
+	UFUNCTION()
+	virtual void OnRep_Stunned();
+
+	UFUNCTION()
+	virtual void OnRep_Burned();
 
 protected:
 	virtual void BeginPlay() override;
@@ -125,7 +139,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Replicated, BlueprintReadWrite, Category = "Combat")
 	bool InShockLoop = false;
-
+	
 	/* Minions */
 	int32 MinionCount = 0;
 	
@@ -133,7 +147,10 @@ protected:
 	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UDebuffNiagaraComponent> DebuffNiagaraComponent;
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
 private:
 
