@@ -243,6 +243,7 @@ private:
 	void HandleIncomingDamage(const FEffectProperties& EffectProperties);
 	void HandleIncomingXP(const FEffectProperties& EffectProperties);
 	void Debuff(const FEffectProperties& EffectProperties);
+	static void Siphon(const FString& Attribute, float Damage, const FEffectProperties& Props);
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& EffectProperties) const;
 	void ShowFloatingText(const FEffectProperties& EffectProperties, float DamageAmount, bool bBlockedHit, bool bCriticalHit) const;
 	void SendXPEvent(const FEffectProperties& EffectProperties);

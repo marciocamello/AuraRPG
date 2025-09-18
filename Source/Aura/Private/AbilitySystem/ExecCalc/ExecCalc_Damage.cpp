@@ -100,6 +100,48 @@ void UExecCalc_Damage::DetermineDebuff(const FGameplayEffectCustomExecutionParam
 	}
 }
 
+float UExecCalc_Damage::ApplyDamageReductionByHaloOfProtection(float Damage, const UAbilitySystemComponent* TargetASC,
+	const UCharacterClassInfo* TargetCharacterClassInfo)
+{
+	const FAuraGameplayTags& AbilityTags = FAuraGameplayTags::Get();
+	if (!TargetASC || !TargetASC->HasMatchingGameplayTag(AbilityTags.Abilities_Passive_HaloOfProtection) ||
+		!TargetCharacterClassInfo || !TargetCharacterClassInfo->PassiveAbilityCoefficients)
+	{
+		return Damage;
+	}
+
+	const FRealCurve* DamageReductionCurve = TargetCharacterClassInfo->PassiveAbilityCoefficients->FindCurve(FName("DamageReductionRatio"), FString());
+
+	if (DamageReductionCurve)
+	{
+		int32 AbilityLevel = 1; // Fallback
+		if (TargetASC)
+		{
+			const FAuraGameplayTags& Tags = FAuraGameplayTags::Get();
+			int32 MaxFoundLevel = 0;
+
+			for (const FGameplayAbilitySpec& SpecIt : TargetASC->GetActivatableAbilities())
+			{
+				if (SpecIt.Ability && SpecIt.Ability->GetAssetTags().HasTag(Tags.Abilities_Passive_HaloOfProtection))
+				{
+					const int32 SpecLevel = SpecIt.Level;
+					MaxFoundLevel = FMath::Max(MaxFoundLevel, SpecLevel);
+				}
+			}
+
+			if (MaxFoundLevel > 0)
+			{
+				AbilityLevel = MaxFoundLevel;
+			}
+		}
+		
+		const float DamageReductionPercent = DamageReductionCurve->Eval(AbilityLevel);
+		Damage *= 1.f - DamageReductionPercent / 100.f;
+	}
+
+	return Damage;
+}
+
 void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams,
                                               FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
 {
@@ -190,14 +232,16 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().ArmorPenetrationDef, EvaluationParameters, SourceArmorPenetration);
 	SourceArmorPenetration = FMath::Max<float>(SourceArmorPenetration, 0.f);
 
-	const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(SourceAvatar);
-	const FRealCurve* ArmorPenetrationCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("ArmorPenetration"), FString());
+	const UCharacterClassInfo* SourceCharacterClassInfo  = UAuraAbilitySystemLibrary::GetCharacterClassInfo(SourceAvatar);
+	const UCharacterClassInfo* TargetCharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(TargetAvatar);
+	
+	const FRealCurve* ArmorPenetrationCurve = SourceCharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("ArmorPenetration"), FString());
 	const float ArmorPenetrationCoefficient = ArmorPenetrationCurve->Eval(SourcePlayerLevel);
 	
 	// ArmorPenetration ignores a percentage of the Target's Armor.	
 	const float EffectiveArmor = TargetArmor * ( 100 - SourceArmorPenetration * ArmorPenetrationCoefficient ) / 100.f;
 
-	const FRealCurve* EffectiveArmorCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("EffectiveArmor"), FString());
+	const FRealCurve* EffectiveArmorCurve = SourceCharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("EffectiveArmor"), FString());
 	const float EffectiveArmorCoefficient = EffectiveArmorCurve->Eval(TargetPlayerLevel);
 	
 	// Armor ignores a percentage of incoming Damage.
@@ -215,7 +259,7 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(DamageStatics().CriticalHitDamageDef, EvaluationParameters, SourceCriticalHitDamage);
 	SourceCriticalHitDamage = FMath::Max<float>(SourceCriticalHitDamage, 0.f);
 
-	const FRealCurve* CriticalHitResistanceCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("CriticalHitResistance"), FString());
+	const FRealCurve* CriticalHitResistanceCurve = SourceCharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("CriticalHitResistance"), FString());
 	const float CriticalHitResistanceCoefficient = CriticalHitResistanceCurve->Eval(TargetPlayerLevel);
 	
 	// Critical Hit Resistance reduces Critical Hit Chance by a certain percentage
@@ -225,6 +269,11 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	// Double damage plus a bonus if critical hit
 	Damage = bCriticalHit ? 2.f * Damage + SourceCriticalHitDamage : Damage;
+
+	//Grant a GameplayTag to the owning ASC upon Ability Activation. In the Damage ExecCalc, check the source owned tags for this tag, and if it’s present, decrease effective damage by 20%.
+	Damage = ApplyDamageReductionByHaloOfProtection(Damage, TargetASC, TargetCharacterClassInfo );
+
+	//Grant a GameplayTag to the owning ASC upon Ability Activation. In the Attribute Set, while handling incoming damage, check the source of the damage for this tag, and if it’s present, use a dynamic gameplay effect to add to the source’s Health.
 	
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(), EGameplayModOp::Additive, Damage);
 	OutExecutionOutput.AddOutputModifier(EvaluatedData);

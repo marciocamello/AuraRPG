@@ -6,6 +6,7 @@
 #include "GameplayEffectExecutionCalculation.h"
 #include "ExecCalc_Damage.generated.h"
 
+class UCharacterClassInfo;
 /**
  * 
  */
@@ -20,6 +21,10 @@ public:
 	                     const FGameplayEffectSpec& Spec,
 	                     FAggregatorEvaluateParameters EvaluationParameters, TMap<FGameplayTag, FGameplayEffectAttributeCaptureDefinition>& InTagsToDefs) const;
 
+	static float ApplyDamageReductionByHaloOfProtection(float Damage,
+												 const UAbilitySystemComponent* TargetASC,
+												 const UCharacterClassInfo* TargetCharacterClassInfo);
+	
 	virtual void Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const override;
 	
 };

@@ -62,4 +62,7 @@ public:
 	TObjectPtr<UCurveTable> DamageCalculationCoefficients;
 
 	FCharacterClassDefaultInfo GetClassDefaultInfo(ECharacterClass CharacterClass);
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaults|Abilities")
+	TObjectPtr<UCurveTable> PassiveAbilityCoefficients;
 };

@@ -7,6 +7,7 @@
 //#include "AuraGameplayTags.h"
 #include "AuraGameplayTags.h"
 #include "GameplayEffectExtension.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
@@ -287,6 +288,7 @@ void UAuraAttributeSet::OnRep_PhysicalResistance(const FGameplayAttributeData& O
 void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProperties)
 {
 	const float LocalInComingDamage = GetIncomingDamage();
+	const FAuraGameplayTags& GameplayTags = FAuraGameplayTags::Get();
 	SetIncomingDamage(0.f);
 	if(LocalInComingDamage > 0.f)
 	{
@@ -322,9 +324,23 @@ void UAuraAttributeSet::HandleIncomingDamage(const FEffectProperties& EffectProp
 		const bool bBlockedHit = UAuraAbilitySystemLibrary::IsBlockedHit(EffectProperties.EffectContextHandle);
 		const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit(EffectProperties.EffectContextHandle);
 		ShowFloatingText(EffectProperties, LocalInComingDamage, bBlockedHit, bCriticalHit);
+		
+		//Debuff
 		if(UAuraAbilitySystemLibrary::IsSuccessfulDebuff(EffectProperties.EffectContextHandle))
 		{
 			Debuff(EffectProperties);
+		}
+
+		// LifeSiphon 
+		if (EffectProperties.SourceASC && EffectProperties.SourceASC->HasMatchingGameplayTag(GameplayTags.Abilities_Passive_LifeSiphon))
+		{
+			Siphon("Life", LocalInComingDamage, EffectProperties);
+		}
+
+		// ManaSiphon 
+		if (EffectProperties.SourceASC && EffectProperties.SourceASC->HasMatchingGameplayTag(GameplayTags.Abilities_Passive_ManaSiphon))
+		{
+			Siphon("Mana", LocalInComingDamage, EffectProperties);
 		}
 	}
 }
@@ -426,5 +442,54 @@ void UAuraAttributeSet::Debuff(const FEffectProperties& EffectProperties)
 		
 		EffectProperties.TargetASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
 	}
+}
+
+void UAuraAttributeSet::Siphon(const FString& Attribute, float Damage, const FEffectProperties& Props)
+{
+    if (Props.SourceCharacter->Implements<UCombatInterface>() &&
+        ICombatInterface::Execute_IsDead(Props.SourceCharacter))
+        return;
+
+    const FString SiphonName = FString::Printf(TEXT("%sSiphon"), *Attribute);
+    UGameplayEffect* Effect = NewObject<UGameplayEffect>(GetTransientPackage(), FName(SiphonName));
+
+    const FGameplayTag SiphonTag = FGameplayTag::RequestGameplayTag(
+        FName(FString::Printf(TEXT("Abilities.Passive.%s"), *SiphonName)));
+
+    UAuraAbilitySystemComponent* SourceASC = Cast<UAuraAbilitySystemComponent>(Props.SourceASC);
+    const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(
+        Props.SourceCharacter);
+    const FGameplayAbilitySpec* Spec = SourceASC->GetSpecFromAbilityTag(SiphonTag);
+
+    if (!SourceASC || !SourceASC->HasMatchingGameplayTag(SiphonTag) || !CharacterClassInfo || !Spec ||
+        !CharacterClassInfo->PassiveAbilityCoefficients) { return; }
+
+    if (const FRealCurve* SiphonCurve = CharacterClassInfo->PassiveAbilityCoefficients->FindCurve(
+        FName(FString::Printf(TEXT("%sPercentage"), *SiphonName)), FString()))
+    {
+        const float AbilityLevel = Spec->Level;
+        const float SiphonPercent = SiphonCurve->Eval(AbilityLevel);
+        Damage *= SiphonPercent / 100.f;
+    }
+
+    Effect->DurationPolicy = EGameplayEffectDurationType::Instant;
+    Effect->StackingType = EGameplayEffectStackingType::AggregateBySource;
+    Effect->StackLimitCount = 1;
+
+    const int32 Index = Effect->Modifiers.Num();
+    Effect->Modifiers.Add(FGameplayModifierInfo());
+    FGameplayModifierInfo& ModifierInfo = Effect->Modifiers[Index];
+
+    ModifierInfo.ModifierMagnitude = FScalableFloat(Damage);
+    ModifierInfo.ModifierOp = EGameplayModOp::Additive;
+    ModifierInfo.Attribute = GetHealthAttribute();
+
+    FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
+    EffectContext.AddSourceObject(Props.SourceAvatarActor);
+
+    if (FGameplayEffectSpec* MutableSpec = new FGameplayEffectSpec(Effect, EffectContext, 1.f))
+    {
+        Props.SourceASC->ApplyGameplayEffectSpecToSelf(*MutableSpec);
+    }
 }
 
