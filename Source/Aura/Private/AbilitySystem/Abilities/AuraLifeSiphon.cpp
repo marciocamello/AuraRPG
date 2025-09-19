@@ -1,81 +1,44 @@
 // Copyright Axchemy Games
 
-
 #include "AbilitySystem/Abilities/AuraLifeSiphon.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 
-FString UAuraLifeSiphon::GetDescription(int32 Level, FText Title, FText Description)
+UAuraLifeSiphon::UAuraLifeSiphon()
 {
-    const int32 DamageReduce = PassiveAbilityCurve.GetValueAtLevel(Level);
-	const float ManaCost = FMath::Abs(GetManaCost(Level));
-	const float CoolDownCost = GetCooldownCost(Level);
-	
-	FString Template = "<Title>{Title}</>\n\n"
-						"<Default>{Description}</>\n\n"
-						"<Small>Level:</> <Level>{Level}</>\n"
-						"<Small>Mana Cost:</> <ManaCost>{ManaCost}</>\n"
-						"<Small>Cooldown:</> <Cooldown>{Cooldown}</>";
-
-	Template = Template.Replace(TEXT("{Title}"), *Title.ToString());
-	Template = Template.Replace(TEXT("{DamageReduction}"), *FText::FromString(FString::FromInt(DamageReduce)).ToString());
-	Template = Template.Replace(TEXT("{Level}"), *FText::FromString(FString::FromInt(Level)).ToString());
-	
-	const FString FormattedManaCost = FString::Printf(TEXT("%.1f"), ManaCost);
-	Template = Template.Replace(TEXT("{ManaCost}"), *FText::FromString(FormattedManaCost).ToString());
-	Template = Template.Replace(TEXT("{Cooldown}"), *FText::FromString(FString::SanitizeFloat(CoolDownCost)).ToString());
-	
-	return Template.Replace(TEXT("{Description}"), *Description.ToString());
+	PassiveType = EPassiveAbilityType::LifeSteal;
 }
 
-FString UAuraLifeSiphon::GetNextLevelDescription(int32 Level, FText Title, FText Description)
+FString UAuraLifeSiphon::GetSpecificEffectLine(int32 Level)
 {
-    const int32 DamageReduce = PassiveAbilityCurve.GetValueAtLevel(Level);
-	const float ManaCost = FMath::Abs(GetManaCost(Level));
-	const float CoolDownCost = GetCooldownCost(Level);
-	
-	FString Template = "<Title>{Title}</>\n\n"
-						"<Default>{Description}</>\n\n"
-						"<Small>Level:</> <Level>{Level}</>\n"
-						"<Small>Mana Cost:</> <ManaCost>{ManaCost}</>\n"
-						"<Small>Cooldown:</> <Cooldown>{Cooldown}</>";
-
-	Template = Template.Replace(TEXT("{Title}"), *Title.ToString());
-	Template = Template.Replace(TEXT("{DamageReduction}"), *FText::FromString(FString::FromInt(DamageReduce)).ToString());
-	Template = Template.Replace(TEXT("{Level}"), *FText::FromString(FString::FromInt(Level)).ToString());
-	
-	const FString FormattedManaCost = FString::Printf(TEXT("%.1f"), ManaCost);
-	Template = Template.Replace(TEXT("{ManaCost}"), *FText::FromString(FormattedManaCost).ToString());
-	Template = Template.Replace(TEXT("{Cooldown}"), *FText::FromString(FString::SanitizeFloat(CoolDownCost)).ToString());
-	
-	return Template.Replace(TEXT("{Description}"), *Description.ToString());
+	const int32 LifeSteal = PassiveAbilityCurve.GetValueAtLevel(Level);
+	return FString::Printf(TEXT("<Small>Life Steal:</> <Highlight>%d%%</>"), LifeSteal);
 }
 
 void UAuraLifeSiphon::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-                                            const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-                                            const FGameplayEventData* TriggerEventData)
+									  const FGameplayAbilityActorInfo *ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+									  const FGameplayEventData *TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(
-		UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
+	if (UAuraAbilitySystemComponent *AuraASC = Cast<UAuraAbilitySystemComponent>(
+			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
 	{
-		AuraASC->AddLooseGameplayTag(FAuraGameplayTags::Get().Abilities_Passive_HaloOfProtection);
+		AuraASC->AddLooseGameplayTag(FAuraGameplayTags::Get().Abilities_Passive_LifeSiphon);
 	}
 }
 
 void UAuraLifeSiphon::EndAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-	bool bReplicateEndAbility, bool bWasCancelled)
+								 const FGameplayAbilityActorInfo *ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+								 bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 
-	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(
-		UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
+	if (UAuraAbilitySystemComponent *AuraASC = Cast<UAuraAbilitySystemComponent>(
+			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
 	{
-		AuraASC->RemoveLooseGameplayTag(FAuraGameplayTags::Get().Abilities_Passive_HaloOfProtection);
+		AuraASC->RemoveLooseGameplayTag(FAuraGameplayTags::Get().Abilities_Passive_LifeSiphon);
 	}
 }
-

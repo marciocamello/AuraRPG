@@ -1,79 +1,43 @@
 // Copyright Axchemy Games
 
-
 #include "AbilitySystem/Abilities/AuraHaloOfProtection.h"
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 
-FString UAuraHaloOfProtection::GetDescription(int32 Level, FText Title, FText Description)
+UAuraHaloOfProtection::UAuraHaloOfProtection()
 {
-    const int32 DamageReduce = PassiveAbilityCurve.GetValueAtLevel(Level);
-	const float ManaCost = FMath::Abs(GetManaCost(Level));
-	const float CoolDownCost = GetCooldownCost(Level);
-	
-	FString Template = "<Title>{Title}</>\n\n"
-						"<Default>{Description}</>\n\n"
-						"<Small>Level:</> <Level>{Level}</>\n"
-						"<Small>Mana Cost:</> <ManaCost>{ManaCost}</>\n"
-						"<Small>Cooldown:</> <Cooldown>{Cooldown}</>";
-
-	Template = Template.Replace(TEXT("{Title}"), *Title.ToString());
-	Template = Template.Replace(TEXT("{DamageReduction}"), *FText::FromString(FString::FromInt(DamageReduce)).ToString());
-	Template = Template.Replace(TEXT("{Level}"), *FText::FromString(FString::FromInt(Level)).ToString());
-	
-	const FString FormattedManaCost = FString::Printf(TEXT("%.1f"), ManaCost);
-	Template = Template.Replace(TEXT("{ManaCost}"), *FText::FromString(FormattedManaCost).ToString());
-	Template = Template.Replace(TEXT("{Cooldown}"), *FText::FromString(FString::SanitizeFloat(CoolDownCost)).ToString());
-	
-	return Template.Replace(TEXT("{Description}"), *Description.ToString());
+	PassiveType = EPassiveAbilityType::Protection;
 }
 
-FString UAuraHaloOfProtection::GetNextLevelDescription(int32 Level, FText Title, FText Description)
+FString UAuraHaloOfProtection::GetSpecificEffectLine(int32 Level)
 {
-    const int32 DamageReduce = PassiveAbilityCurve.GetValueAtLevel(Level);
-	const float ManaCost = FMath::Abs(GetManaCost(Level));
-	const float CoolDownCost = GetCooldownCost(Level);
-	
-	FString Template = "<Title>{Title}</>\n\n"
-						"<Default>{Description}</>\n\n"
-						"<Small>Level:</> <Level>{Level}</>\n"
-						"<Small>Mana Cost:</> <ManaCost>{ManaCost}</>\n"
-						"<Small>Cooldown:</> <Cooldown>{Cooldown}</>";
-
-	Template = Template.Replace(TEXT("{Title}"), *Title.ToString());
-	Template = Template.Replace(TEXT("{DamageReduction}"), *FText::FromString(FString::FromInt(DamageReduce)).ToString());
-	Template = Template.Replace(TEXT("{Level}"), *FText::FromString(FString::FromInt(Level)).ToString());
-	
-	const FString FormattedManaCost = FString::Printf(TEXT("%.1f"), ManaCost);
-	Template = Template.Replace(TEXT("{ManaCost}"), *FText::FromString(FormattedManaCost).ToString());
-	Template = Template.Replace(TEXT("{Cooldown}"), *FText::FromString(FString::SanitizeFloat(CoolDownCost)).ToString());
-	
-	return Template.Replace(TEXT("{Description}"), *Description.ToString());
+	const int32 DamageReduction = PassiveAbilityCurve.GetValueAtLevel(Level);
+	return FString::Printf(TEXT("<Small>Damage Reduction:</> <Highlight>%d%%</>"), DamageReduction);
 }
 
 void UAuraHaloOfProtection::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-                                            const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-                                            const FGameplayEventData* TriggerEventData)
+											const FGameplayAbilityActorInfo *ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+											const FGameplayEventData *TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(
-		UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
+	if (UAuraAbilitySystemComponent *AuraASC = Cast<UAuraAbilitySystemComponent>(
+			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
 	{
 		AuraASC->AddLooseGameplayTag(FAuraGameplayTags::Get().Abilities_Passive_HaloOfProtection);
 	}
 }
 
 void UAuraHaloOfProtection::EndAbility(const FGameplayAbilitySpecHandle Handle,
-	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-	bool bReplicateEndAbility, bool bWasCancelled)
+									   const FGameplayAbilityActorInfo *ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+									   bool bReplicateEndAbility, bool bWasCancelled)
 {
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 
-	if (UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(
-		UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
+	if (UAuraAbilitySystemComponent *AuraASC = Cast<UAuraAbilitySystemComponent>(
+			UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo())))
 	{
 		AuraASC->RemoveLooseGameplayTag(FAuraGameplayTags::Get().Abilities_Passive_HaloOfProtection);
 	}

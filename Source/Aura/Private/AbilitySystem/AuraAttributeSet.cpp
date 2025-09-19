@@ -482,7 +482,16 @@ void UAuraAttributeSet::Siphon(const FString& Attribute, float Damage, const FEf
 
     ModifierInfo.ModifierMagnitude = FScalableFloat(Damage);
     ModifierInfo.ModifierOp = EGameplayModOp::Additive;
-    ModifierInfo.Attribute = GetHealthAttribute();
+
+	// check is for life or mana siphon
+	if (Attribute == "Life")
+	{
+		ModifierInfo.Attribute = GetHealthAttribute();
+	}
+	else
+	{
+		ModifierInfo.Attribute = GetManaAttribute();
+	}
 
     FGameplayEffectContextHandle EffectContext = Props.SourceASC->MakeEffectContext();
     EffectContext.AddSourceObject(Props.SourceAvatarActor);

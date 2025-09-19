@@ -7,7 +7,7 @@
 #include "AuraLifeSiphon.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class AURA_API UAuraLifeSiphon : public UAuraPassiveAbility
@@ -15,21 +15,18 @@ class AURA_API UAuraLifeSiphon : public UAuraPassiveAbility
 	GENERATED_BODY()
 
 public:
-	virtual FString GetDescription(int32 Level, FText Title, FText Description) override;
-	virtual FString GetNextLevelDescription(int32 Level, FText Title, FText Description) override;
-	
+	UAuraLifeSiphon();
+
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = "Damage")
-	FScalableFloat PassiveAbilityCurve;
+	virtual FString GetSpecificEffectLine(int32 Level) override;
 
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-								 const FGameplayAbilityActorInfo* ActorInfo,
+								 const FGameplayAbilityActorInfo *ActorInfo,
 								 const FGameplayAbilityActivationInfo ActivationInfo,
-								 const FGameplayEventData* TriggerEventData) override;
+								 const FGameplayEventData *TriggerEventData) override;
 
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle,
-							const FGameplayAbilityActorInfo* ActorInfo,
+							const FGameplayAbilityActorInfo *ActorInfo,
 							const FGameplayAbilityActivationInfo ActivationInfo,
 							bool bReplicateEndAbility, bool bWasCancelled) override;
-	
 };
