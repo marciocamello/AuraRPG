@@ -445,12 +445,6 @@ The project includes configured tasks for different builds:
 
 This is an educational project based on Stephen Ulibarri's course. Contributions are welcome for:
 
-- Melhorias de performance
-- Correções de bugs
-- Documentação
-- Novos features experimentais
-- Testes e quality assurance
-
 - Performance improvements
 - Bug fixes
 - Documentation
